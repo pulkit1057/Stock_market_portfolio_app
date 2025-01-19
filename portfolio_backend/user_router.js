@@ -25,12 +25,11 @@ router.post('/registeration', async (req, res) => {
 })
 
 
-router.get('/login', async (req, res) => {
+router.post('/login', async (req, res) => {
     try {
         const { email, passkey } = req.body
 
         const response = await db.query(`select passkey from users where email = '${email}'`)
-        console.log(response[0][0]['passkey'])
 
         if (response[0].length === 1) {
             const isCorrectpassword = await bcrypt.compare(passkey, response[0][0]['passkey'])
