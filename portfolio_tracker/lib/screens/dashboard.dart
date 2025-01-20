@@ -102,7 +102,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
               );
               var body = jsonDecode(response.body);
-              // print(body);
+              print(body);
               var map = body['Time Series (5min)'];
               // print(map.values);
               for(var i in map.values)
