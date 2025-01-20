@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
+import 'package:portfolio_tracker/config.dart';
 import 'package:portfolio_tracker/screens/holdings.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -91,6 +94,30 @@ class _DashboardScreenState extends State<DashboardScreen> {
             dataMap: dataMap,
             chartValuesOptions: ChartValuesOptions(decimalPlaces: 1),
           ),
+          ElevatedButton(
+            onPressed: () async {
+              final response = await http.get(
+                Uri.parse(
+                  url,
+                ),
+              );
+              var body = jsonDecode(response.body);
+              // print(body);
+              var map = body['Time Series (5min)'];
+              // print(map.values);
+              for(var i in map.values)
+              {
+                // print(i.key);
+                print(i['1. open']);
+              }
+
+              for(var i in map.keys)
+              {
+                print(i);
+              }
+            },
+            child: Text('button'),
+          )
         ],
       ),
     );
