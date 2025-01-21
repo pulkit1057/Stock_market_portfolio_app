@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
 class StockTile extends StatelessWidget {
-  const StockTile({super.key});
+  const StockTile({
+    super.key,
+    required this.title,
+  });
+  final title;
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +20,29 @@ class StockTile extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Text(
-              'Stock 1',
-              style: TextStyle(fontSize: 20),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title['symbol'],
+                  style: TextStyle(fontSize: 17),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Row(
+                  children: [
+                    Text('qty : '+title['quantity'].toString()),
+                    SizedBox(
+                      width: 18,
+                    ),
+                    Text(
+                      '₹' + title['price'].toString(),
+                      style: TextStyle(color: Colors.green),
+                    ),
+                  ],
+                )
+              ],
             ),
             Spacer(),
             ElevatedButton(onPressed: () {}, child: Icon(Icons.edit)),

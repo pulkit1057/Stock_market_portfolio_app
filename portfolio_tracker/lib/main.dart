@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (token == null || JwtDecoder.isExpired(token)) {
+    if (token == '' || token == null || JwtDecoder.isExpired(token)) {
       return AuthScreen(prefs:prefs,);
     }
     else{

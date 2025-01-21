@@ -19,6 +19,9 @@ router.post('/get_holdings', async (req, res) => {
         const { email } = req.body
 
         const response = await db.query(`select * from holdings where email='${email}'`)
+        console.log(response[0]);
+
+        return res.json({ status: true, data: response[0], })
     } catch (error) {
         throw error
     }
@@ -43,7 +46,7 @@ router.post('/delete_stocks')
 
 router.post('/get_portfolio', async (req, res) => {
     const { email } = req.body
-    const response = await db.query(`select sum(quantity * bought_price) as portfolio from holdings where email='${email}'`)
+    const response = await db.query(`select sum(quantity * price) as portfolio from holdings where email='${email}'`)
     console.log(response[0])
 
     return res.json({ status: true, message: "Your total portfolio is recieved" })

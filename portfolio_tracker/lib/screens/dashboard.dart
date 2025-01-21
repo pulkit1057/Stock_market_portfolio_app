@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:portfolio_tracker/config.dart';
+import 'package:portfolio_tracker/screens/auth.dart';
 import 'package:portfolio_tracker/screens/holdings.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({
@@ -28,7 +30,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   void initState() {
     super.initState();
 
-    Map<String,dynamic> jwtDecodedToken = JwtDecoder.decode(widget.token);
+    Map<String, dynamic> jwtDecodedToken = JwtDecoder.decode(widget.token);
     email = jwtDecodedToken['email'];
   }
 
@@ -37,6 +39,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Portfolios'),
+        actions: [
+          IconButton(
+            onPressed: () async {
+              final prefs = await SharedPreferencesWithCache.create(
+                  cacheOptions: SharedPreferencesWithCacheOptions(
+                      allowList: <String>{'token'}));
+              prefs.setString('token', '');
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (context) => AuthScreen(
+                  prefs: prefs,
+                ),
+              ));
+            },
+            icon: Icon(Icons.logout),
+          ),
+        ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -89,7 +107,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => HoldingsScreen(email:email),
+                  builder: (context) => HoldingsScreen(email: email),
                 ),
               );
             },
