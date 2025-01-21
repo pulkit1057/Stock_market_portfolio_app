@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
 import 'package:portfolio_tracker/screens/dashboard.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthScreen extends StatefulWidget {
-  const AuthScreen({super.key});
+  const AuthScreen({
+    super.key,
+    required this.prefs,
+  });
+  final SharedPreferencesWithCache prefs;
 
   @override
   State<AuthScreen> createState() {
@@ -46,9 +50,8 @@ class _AuthScreenState extends State<AuthScreen> {
         final responseBody = jsonDecode(response.body);
         if (!responseBody['status']) {
           return;
-          // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => DashboardScreen(token: ),));
         }
-        userName.clear();
+        
       } catch (e) {
         throw e;
       }
@@ -71,9 +74,13 @@ class _AuthScreenState extends State<AuthScreen> {
       final responseBody = jsonDecode(response.body);
       final status = responseBody["status"];
       if (status) {
+        var myToken = responseBody['token'];
+        widget.prefs.setString('token', myToken);
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (context) => DashboardScreen(token: responseBody['token']),
+            builder: (context) => DashboardScreen(
+              token: myToken,
+            ),
           ),
         );
         ScaffoldMessenger.of(context).clearSnackBars();
@@ -88,9 +95,15 @@ class _AuthScreenState extends State<AuthScreen> {
     } catch (e) {
       print(e);
     }
-
+    userName.clear();
     userEmail.clear();
     userPassword.clear();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    widget.prefs.getString('token');
   }
 
   @override

@@ -129,7 +129,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
               }
             },
             child: Text('button'),
-          )
+          ),
+          Text(email)
         ],
       ),
     );
