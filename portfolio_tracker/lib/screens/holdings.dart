@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:portfolio_tracker/components/stock_tile.dart';
 
 class HoldingsScreen extends StatefulWidget {
-  const HoldingsScreen({super.key});
+  const HoldingsScreen({
+    super.key,
+    required this.email,
+  });
+  final String email;
 
   @override
   State<HoldingsScreen> createState() => _HoldingsScreenState();

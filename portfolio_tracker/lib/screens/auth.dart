@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:portfolio_tracker/screens/dashboard.dart';
+
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
 
@@ -24,37 +26,7 @@ class _AuthScreenState extends State<AuthScreen> {
       return;
     }
 
-    if (isLogin) {
-      try {
-        final response = await http.post(
-          Uri.parse('http://192.168.1.7:5000/login'),
-          headers: {
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonEncode(
-            {
-              'email': userEmail.text,
-              'passkey': userPassword.text,
-            },
-          ),
-        );
-
-        final responseBody = jsonDecode(response.body);
-        final success = responseBody["success"];
-        if (success) {
-          ScaffoldMessenger.of(context).clearSnackBars();
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                responseBody["message"],
-              ),
-            ),
-          );
-        }
-      } catch (e) {
-        print(e);
-      }
-    } else {
+    if (!isLogin) {
       try {
         final response = await http.post(
           Uri.parse(
@@ -71,13 +43,50 @@ class _AuthScreenState extends State<AuthScreen> {
             },
           ),
         );
-        final resonseBody = jsonDecode(response.body);
-        final success = resonseBody["success"];
-        print(success);
+        final responseBody = jsonDecode(response.body);
+        if (!responseBody['status']) {
+          return;
+          // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => DashboardScreen(token: ),));
+        }
         userName.clear();
       } catch (e) {
-        print(e);
+        throw e;
       }
+    }
+
+    try {
+      final response = await http.post(
+        Uri.parse('http://192.168.1.7:5000/login'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(
+          {
+            'email': userEmail.text,
+            'passkey': userPassword.text,
+          },
+        ),
+      );
+
+      final responseBody = jsonDecode(response.body);
+      final status = responseBody["status"];
+      if (status) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => DashboardScreen(token: responseBody['token']),
+          ),
+        );
+        ScaffoldMessenger.of(context).clearSnackBars();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              responseBody["message"],
+            ),
+          ),
+        );
+      }
+    } catch (e) {
+      print(e);
     }
 
     userEmail.clear();

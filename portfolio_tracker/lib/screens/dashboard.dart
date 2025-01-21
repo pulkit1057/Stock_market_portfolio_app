@@ -4,19 +4,33 @@ import 'package:portfolio_tracker/config.dart';
 import 'package:portfolio_tracker/screens/holdings.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 class DashboardScreen extends StatefulWidget {
-  const DashboardScreen({super.key});
+  const DashboardScreen({
+    super.key,
+    required this.token,
+  });
+  final token;
 
   @override
   State<DashboardScreen> createState() => _DashboardScreenState();
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+  late String email;
   final Map<String, double> dataMap = {
     "stocks": 26,
     "mutual funds": 55,
   };
+
+  @override
+  void initState() {
+    super.initState();
+
+    Map<String,dynamic> jwtDecodedToken = JwtDecoder.decode(widget.token);
+    email = jwtDecodedToken['email'];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +89,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => HoldingsScreen(),
+                  builder: (context) => HoldingsScreen(email:email),
                 ),
               );
             },
@@ -105,14 +119,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
               print(body);
               var map = body['Time Series (5min)'];
               // print(map.values);
-              for(var i in map.values)
-              {
+              for (var i in map.values) {
                 // print(i.key);
                 print(i['1. open']);
               }
 
-              for(var i in map.keys)
-              {
+              for (var i in map.keys) {
                 print(i);
               }
             },
