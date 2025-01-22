@@ -5,7 +5,7 @@ class StockTile extends StatelessWidget {
     super.key,
     required this.title,
   });
-  final title;
+  final Map<String, dynamic> title;
 
   @override
   Widget build(BuildContext context) {
@@ -32,12 +32,12 @@ class StockTile extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    Text('qty : '+title['quantity'].toString()),
+                    Text('qty : +${title['quantity'].toString()}'),
                     SizedBox(
                       width: 18,
                     ),
                     Text(
-                      '₹' + title['price'].toString(),
+                      '₹ + ${title['price'].toString()}',
                       style: TextStyle(color: Colors.green),
                     ),
                   ],
@@ -45,11 +45,21 @@ class StockTile extends StatelessWidget {
               ],
             ),
             Spacer(),
-            ElevatedButton(onPressed: () {}, child: Icon(Icons.edit)),
+            ElevatedButton(
+              onPressed: () {},
+              child: Icon(
+                Icons.edit,
+              ),
+            ),
             SizedBox(
               width: 5,
             ),
-            ElevatedButton(onPressed: () {}, child: Icon(Icons.add)),
+            ElevatedButton(
+              onPressed: () {},
+              child: Icon(
+                Icons.add,
+              ),
+            ),
           ],
         ),
       ),

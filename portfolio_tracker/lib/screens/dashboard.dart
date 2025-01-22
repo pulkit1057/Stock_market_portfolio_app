@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
+import 'package:portfolio_tracker/components/user_searchbar.dart';
 import 'package:portfolio_tracker/config.dart';
 import 'package:portfolio_tracker/screens/auth.dart';
 import 'package:portfolio_tracker/screens/holdings.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:portfolio_tracker/screens/stock.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -13,7 +15,7 @@ class DashboardScreen extends StatefulWidget {
     super.key,
     required this.token,
   });
-  final token;
+  final String token;
 
   @override
   State<DashboardScreen> createState() => _DashboardScreenState();
@@ -36,6 +38,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
+    void visitStockScreen(title) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => StockScreen(title: title),
+        ),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Portfolios'),
@@ -63,42 +74,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             margin: EdgeInsets.symmetric(
               horizontal: 5,
             ),
-            child: SearchAnchor(
-              builder: (context, controller) {
-                return SearchBar(
-                  controller: controller,
-                  leading: Icon(Icons.search),
-                  onTap: () {
-                    controller.openView();
-                  },
-                  onChanged: (_) {
-                    controller.openView();
-                  },
-                  hintText: 'Search',
-                  shape: WidgetStatePropertyAll(
-                    RoundedRectangleBorder(),
-                  ),
-                  elevation: WidgetStatePropertyAll(0.5),
-                );
-              },
-              suggestionsBuilder: (context, controller) {
-                return List<ListTile>.generate(
-                  5,
-                  (int index) {
-                    final String item = 'item $index';
-                    return ListTile(
-                      title: Text(item),
-                      onTap: () {
-                        setState(() {
-                          controller.closeView(item);
-                          FocusScope.of(context).unfocus();
-                        });
-                      },
-                    );
-                  },
-                );
-              },
-            ),
+            child: UserSearchbar()
           ),
           SizedBox(
             height: 10,
