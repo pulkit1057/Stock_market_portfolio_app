@@ -4,8 +4,9 @@ const router = require('express').Router()
 
 router.post('/add_stock', async (req, res) => {
     try {
-        var { email, name, price, quantity } = req.body;
-        await db.query(`insert into holdings(email,name,date,action,price,quantity) values('${email}','${name}',current_date(),'buy',${price},${quantity})`)
+        var { email, name,action, price, quantity } = req.body;
+        console.log(name)
+        await db.query(`insert into holdings(email,name,date,action,price,quantity) values('${email}','${name}',current_date(),'${action}',${price},${quantity})`)
 
         return res.json({ status: true, message: "Added new stock to the portfolio" })
     } catch (error) {

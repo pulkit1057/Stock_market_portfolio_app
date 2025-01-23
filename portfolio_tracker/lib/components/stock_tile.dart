@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:portfolio_tracker/data/listed_companies.dart';
+import 'package:http/http.dart' as http;
 
 class StockTile extends StatefulWidget {
   const StockTile({
@@ -14,6 +17,14 @@ class StockTile extends StatefulWidget {
 }
 
 class _StockTileState extends State<StockTile> {
+  TextEditingController quantity = TextEditingController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    quantity.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,7 +44,7 @@ class _StockTileState extends State<StockTile> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  widget.title['symbol'],
+                  widget.title['name'],
                   style: TextStyle(fontSize: 17),
                 ),
                 SizedBox(
@@ -65,7 +76,7 @@ class _StockTileState extends State<StockTile> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          widget.title['symbol'] + '\n',
+                          "${widget.title['name']} ${'\n'}₹ ${indianStocks[widget.title['name']]!['price']}",
                         ),
                         TextField(
                           decoration: InputDecoration(
@@ -77,6 +88,7 @@ class _StockTileState extends State<StockTile> {
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly
                           ],
+                          controller: quantity,
                         )
                       ],
                     ),
@@ -84,9 +96,30 @@ class _StockTileState extends State<StockTile> {
                       TextButton(
                           onPressed: () {
                             Navigator.of(context).pop();
+                            quantity.clear();
                           },
                           child: Text('Cancel')),
-                      TextButton(onPressed: () {}, child: Text('Submit')),
+                      TextButton(
+                        onPressed: () async {
+                          var response = await http.post(
+                            Uri.parse('http://192.168.1.7:5000/add_stock'),
+                            body: jsonEncode({
+                              "email": widget.title['email'],
+                              "name": widget.title['name'],
+                              "action": "buy",
+                              "price":
+                                  indianStocks[widget.title['name']]!['price'],
+                              "quantity": quantity.text
+                            }),
+                            headers: {
+                              'Content-Type': 'application/json; charset=UTF-8',
+                            },
+                          );
+
+                          Navigator.of(context).pop();
+                        },
+                        child: Text('Submit'),
+                      ),
                     ],
                   ),
                 );
@@ -109,7 +142,7 @@ class _StockTileState extends State<StockTile> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          widget.title['symbol'] + '\n',
+                          "${widget.title['name']} ${'\n'}₹ ${indianStocks[widget.title['name']]!['price']}",
                         ),
                         TextField(
                           decoration: InputDecoration(
@@ -121,6 +154,7 @@ class _StockTileState extends State<StockTile> {
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly
                           ],
+                          controller: quantity,
                         )
                       ],
                     ),
@@ -128,9 +162,32 @@ class _StockTileState extends State<StockTile> {
                       TextButton(
                           onPressed: () {
                             Navigator.of(context).pop();
+                            quantity.clear();
                           },
                           child: Text('Cancel')),
-                      TextButton(onPressed: () {}, child: Text('Submit')),
+                      TextButton(
+                        onPressed: () async {
+                          var response = await http.post(
+                            Uri.parse('http://192.168.1.7:5000/add_stock'),
+                            body: jsonEncode({
+                              "email": widget.title['email'],
+                              "name": widget.title['name'],
+                              "action": "sell",
+                              "price":
+                                  indianStocks[widget.title['name']]!['price'],
+                              "quantity": quantity.text
+                            }),
+                            headers: {
+                              'Content-Type': 'application/json; charset=UTF-8',
+                            },
+                          );
+                          setState(() {
+                            print(jsonDecode(response.body));
+                            Navigator.of(context).pop();
+                          });
+                        },
+                        child: Text('Submit'),
+                      ),
                     ],
                   ),
                 );
