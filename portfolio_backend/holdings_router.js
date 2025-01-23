@@ -4,8 +4,8 @@ const router = require('express').Router()
 
 router.post('/add_stock', async (req, res) => {
     try {
-        var { email, symbol, bought_price, quantity } = req.body;
-        await db.query(`insert into holdings(email,symbol,date,action,price,quantity) values('${email}','${symbol}',current_date(),'buy',${bought_price},${quantity})`)
+        var { email, name, price, quantity } = req.body;
+        await db.query(`insert into holdings(email,name,date,action,price,quantity) values('${email}','${name}',current_date(),'buy',${price},${quantity})`)
 
         return res.json({ status: true, message: "Added new stock to the portfolio" })
     } catch (error) {
@@ -19,7 +19,7 @@ router.post('/get_holdings', async (req, res) => {
         const { email } = req.body
 
         const response = await db.query(`select * from holdings where email='${email}'`)
-        console.log(response[0]);
+        // console.log(response[0]);
 
         return res.json({ status: true, data: response[0], })
     } catch (error) {

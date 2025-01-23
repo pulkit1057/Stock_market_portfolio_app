@@ -38,14 +38,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    void visitStockScreen(title) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => StockScreen(title: title),
-        ),
-      );
-    }
 
     return Scaffold(
       appBar: AppBar(

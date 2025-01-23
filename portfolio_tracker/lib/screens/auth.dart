@@ -24,9 +24,9 @@ class _AuthScreenState extends State<AuthScreen> {
   bool isLogin = true;
 
   void onSubmit() async {
-    if (!userEmail.text.contains('@') &&
-        userPassword.text.trim().length < 6 &&
-        (isLogin || userName.text.trim().length < 6)) {
+    if (!userEmail.text.contains('@') ||
+        userPassword.text.trim().length < 4 ||
+        (!isLogin && userName.text.trim().length < 6)) {
       return;
     }
 

@@ -1,98 +1,160 @@
-Map<String, String> indianStocks = {
-    'Reliance Industries': 'RELIANCE',
-    'Tata Consultancy Services': 'TCS',
-    'HDFC Bank': 'HDFCBANK',
-    'Infosys': 'INFY',
-    'ICICI Bank': 'ICICIBANK',
-    'Bajaj Finance': 'BAJFINANCE',
-    'Bharti Airtel': 'BHARTIARTL',
-    'State Bank of India': 'SBIN',
-    'Larsen & Toubro': 'LT',
-    'Hindustan Unilever': 'HINDUNILVR',
-    'Wipro': 'WIPRO',
-    'Axis Bank': 'AXISBANK',
-    'Kotak Mahindra Bank': 'KOTAKBANK',
-    'Maruti Suzuki': 'MARUTI',
-    'Mahindra & Mahindra': 'M&M',
-    'Asian Paints': 'ASIANPAINT',
-    'Sun Pharma': 'SUNPHARMA',
-    'ITC Limited': 'ITC',
-    'Nestle India': 'NESTLEIND',
-    'Power Grid Corporation': 'POWERGRID',
-    'Tata Steel': 'TATASTEEL',
-    'UltraTech Cement': 'ULTRACEMCO',
-    'Bharat Petroleum': 'BPCL',
-    'Indian Oil Corporation': 'IOC',
-    'Tech Mahindra': 'TECHM',
-    'Dr. Reddy’s Laboratories': 'DRREDDY',
-    'HCL Technologies': 'HCLTECH',
-    'NTPC Limited': 'NTPC',
-    'Hero MotoCorp': 'HEROMOTOCO',
-    'Titan Company': 'TITAN',
-    'Cipla': 'CIPLA',
-    'Adani Ports': 'ADANIPORTS',
-    'Grasim Industries': 'GRASIM',
-    'IndusInd Bank': 'INDUSINDBK',
-    'Bajaj Auto': 'BAJAJ-AUTO',
-    'Divi’s Laboratories': 'DIVISLAB',
-    'Tata Motors': 'TATAMOTORS',
-    'SBI Life Insurance': 'SBILIFE',
-    'Eicher Motors': 'EICHERMOT',
-    'JSW Steel': 'JSWSTEEL',
-    'HDFC Life Insurance': 'HDFCLIFE',
-    'Motherson Sumi Systems': 'MOTHERSUMI',
-    'Reliance Power': 'RELIANCEPOWER',
-    'Shree Cement': 'SHREECEM',
-    'Bajaj Finserv': 'BAJAJFINSV',
-    'Patanjali Ayurved': 'PATAANJALI',
-    'Dr. Lal PathLabs': 'DLF',
-    'Hindalco Industries': 'HINDALCO',
-    'BASF India': 'BASF',
-    'Ambuja Cements': 'AMBUJACEM',
-    'ACC Limited': 'ACC',
-    'V-Mart Retail': 'VMART',
-    'Exide Industries': 'EXIDEIND',
-    'Indian Hotels': 'INDHOTEL',
-    'Zee Entertainment': 'ZEEL',
-    'ICICI Prudential Life Insurance': 'ICICIPRULI',
-    'Bank of Baroda': 'BANKBARODA',
-    'PVR Limited': 'PVR',
-    'TVS Motor Company': 'TVSMOTOR',
-    'Wockhardt': 'WOCKPHARMA',
-    'GAIL India': 'GAIL',
-    'SBI Cards and Payment Services': 'SBICARD',
-    'Tata Chemicals': 'TATACHEM',
-    'Bajaj Holdings & Investment': 'BAJAJHLDNG',
-    'Lupin': 'LUPIN',
-    'Zydus Lifesciences': 'ZYDUSLIFE',
-    'M&M Financial Services': 'M&MFIN',
-    'Colgate-Palmolive India': 'COLPAL',
-    'Britannia Industries': 'BRITANNIA',
-    'Lupin Limited': 'LUPIN',
-    'SBI Mutual Fund': 'SBIMF',
-    'Havells India': 'HAVELLS',
-    'Mahanagar Gas': 'MAHAGAS',
-    'L&T Infotech': 'LTI',
-    'Bharat Forge': 'BHARATFORG',
-    'BHEL': 'BHEL',
-    'Godrej Consumer Products': 'GODREJCP',
-    'Ultratech Cement': 'ULTRACEMCO',
-    'Marico': 'MARICO',
-    'Glenmark Pharmaceuticals': 'GLENMARK',
-    'Sterlite Technologies': 'STERTOOLS',
-    'Indiabulls Housing Finance': 'IBULHSGFIN',
-    'Siemens': 'SIEMENS',
-    'ABB India': 'ABB',
-    'Tata Power': 'TATAPOWER',
-    'Jindal Steel & Power': 'JINDALSTEL',
-    'SpiceJet': 'SPICEJET',
-    'Biocon': 'BIOCON',
-    'Tata Elxsi': 'TATAELXSI',
-    'Dabur India': 'DABUR',
-    'South Indian Bank': 'SOUTHBANK',
-    'Aurobindo Pharma': 'AUROPHARMA',
-    'Ashok Leyland': 'ASHOKLEY',
-  };
+import 'dart:math';
 
+int generateRandomPrice() {
+  return 100 + Random().nextInt(2900);
+}
 
-  List<String> companyNames = indianStocks.keys.toList();
+Map<String, Map<String, dynamic>> indianStocks = {
+  'Reliance Industries': {'symbol': 'RELIANCE', 'price': generateRandomPrice()},
+  'Tata Consultancy Services': {
+    'symbol': 'TCS',
+    'price': generateRandomPrice()
+  },
+  'HDFC Bank': {'symbol': 'HDFCBANK', 'price': generateRandomPrice()},
+  'Infosys': {'symbol': 'INFY', 'price': generateRandomPrice()},
+  'ICICI Bank': {'symbol': 'ICICIBANK', 'price': generateRandomPrice()},
+  'Bajaj Finance': {'symbol': 'BAJFINANCE', 'price': generateRandomPrice()},
+  'Bharti Airtel': {'symbol': 'BHARTIARTL', 'price': generateRandomPrice()},
+  'State Bank of India': {'symbol': 'SBIN', 'price': generateRandomPrice()},
+  'Larsen & Toubro': {'symbol': 'LT', 'price': generateRandomPrice()},
+  'Hindustan Unilever': {
+    'symbol': 'HINDUNILVR',
+    'price': generateRandomPrice()
+  },
+  'Wipro': {'symbol': 'WIPRO', 'price': generateRandomPrice()},
+  'Axis Bank': {'symbol': 'AXISBANK', 'price': generateRandomPrice()},
+  'Kotak Mahindra Bank': {
+    'symbol': 'KOTAKBANK',
+    'price': generateRandomPrice()
+  },
+  'Maruti Suzuki': {'symbol': 'MARUTI', 'price': generateRandomPrice()},
+  'Mahindra & Mahindra': {'symbol': 'M&M', 'price': generateRandomPrice()},
+  'Asian Paints': {'symbol': 'ASIANPAINT', 'price': generateRandomPrice()},
+  'Sun Pharma': {'symbol': 'SUNPHARMA', 'price': generateRandomPrice()},
+  'ITC Limited': {'symbol': 'ITC', 'price': generateRandomPrice()},
+  'Nestle India': {'symbol': 'NESTLEIND', 'price': generateRandomPrice()},
+  'Power Grid Corporation': {
+    'symbol': 'POWERGRID',
+    'price': generateRandomPrice()
+  },
+  'Tata Steel': {'symbol': 'TATASTEEL', 'price': generateRandomPrice()},
+  'UltraTech Cement': {'symbol': 'ULTRACEMCO', 'price': generateRandomPrice()},
+  'Bharat Petroleum': {'symbol': 'BPCL', 'price': generateRandomPrice()},
+  'Indian Oil Corporation': {'symbol': 'IOC', 'price': generateRandomPrice()},
+  'Tech Mahindra': {'symbol': 'TECHM', 'price': generateRandomPrice()},
+  'Dr. Reddy’s Laboratories': {
+    'symbol': 'DRREDDY',
+    'price': generateRandomPrice()
+  },
+  'HCL Technologies': {'symbol': 'HCLTECH', 'price': generateRandomPrice()},
+  'NTPC Limited': {'symbol': 'NTPC', 'price': generateRandomPrice()},
+  'Hero MotoCorp': {'symbol': 'HEROMOTOCO', 'price': generateRandomPrice()},
+  'Titan Company': {'symbol': 'TITAN', 'price': generateRandomPrice()},
+  'Cipla': {'symbol': 'CIPLA', 'price': generateRandomPrice()},
+  'Adani Ports': {'symbol': 'ADANIPORTS', 'price': generateRandomPrice()},
+  'Grasim Industries': {'symbol': 'GRASIM', 'price': generateRandomPrice()},
+  'IndusInd Bank': {'symbol': 'INDUSINDBK', 'price': generateRandomPrice()},
+  'Bajaj Auto': {'symbol': 'BAJAJ-AUTO', 'price': generateRandomPrice()},
+  'Divi’s Laboratories': {'symbol': 'DIVISLAB', 'price': generateRandomPrice()},
+  'Tata Motors': {'symbol': 'TATAMOTORS', 'price': generateRandomPrice()},
+  'SBI Life Insurance': {'symbol': 'SBILIFE', 'price': generateRandomPrice()},
+  'Eicher Motors': {'symbol': 'EICHERMOT', 'price': generateRandomPrice()},
+  'JSW Steel': {'symbol': 'JSWSTEEL', 'price': generateRandomPrice()},
+  'HDFC Life Insurance': {'symbol': 'HDFCLIFE', 'price': generateRandomPrice()},
+  'Motherson Sumi Systems': {
+    'symbol': 'MOTHERSUMI',
+    'price': generateRandomPrice()
+  },
+  'Reliance Power': {'symbol': 'RELIANCEPOWER', 'price': generateRandomPrice()},
+  'Shree Cement': {'symbol': 'SHREECEM', 'price': generateRandomPrice()},
+  'Bajaj Finserv': {'symbol': 'BAJAJFINSV', 'price': generateRandomPrice()},
+  'Patanjali Ayurved': {'symbol': 'PATAANJALI', 'price': generateRandomPrice()},
+  'Dr. Lal PathLabs': {'symbol': 'DLF', 'price': generateRandomPrice()},
+  'Hindalco Industries': {'symbol': 'HINDALCO', 'price': generateRandomPrice()},
+  'BASF India': {'symbol': 'BASF', 'price': generateRandomPrice()},
+  'Ambuja Cements': {'symbol': 'AMBUJACEM', 'price': generateRandomPrice()},
+  'ACC Limited': {'symbol': 'ACC', 'price': generateRandomPrice()},
+  'V-Mart Retail': {'symbol': 'VMART', 'price': generateRandomPrice()},
+  'Exide Industries': {'symbol': 'EXIDEIND', 'price': generateRandomPrice()},
+  'Indian Hotels': {'symbol': 'INDHOTEL', 'price': generateRandomPrice()},
+  'Zee Entertainment': {'symbol': 'ZEEL', 'price': generateRandomPrice()},
+  'ICICI Prudential Life Insurance': {
+    'symbol': 'ICICIPRULI',
+    'price': generateRandomPrice()
+  },
+  'Bank of Baroda': {'symbol': 'BANKBARODA', 'price': generateRandomPrice()},
+  'PVR Limited': {'symbol': 'PVR', 'price': generateRandomPrice()},
+  'TVS Motor Company': {'symbol': 'TVSMOTOR', 'price': generateRandomPrice()},
+  'Wockhardt': {'symbol': 'WOCKPHARMA', 'price': generateRandomPrice()},
+  'GAIL India': {'symbol': 'GAIL', 'price': generateRandomPrice()},
+  'SBI Cards and Payment Services': {
+    'symbol': 'SBICARD',
+    'price': generateRandomPrice()
+  },
+  'Tata Chemicals': {'symbol': 'TATACHEM', 'price': generateRandomPrice()},
+  'Bajaj Holdings & Investment': {
+    'symbol': 'BAJAJHLDNG',
+    'price': generateRandomPrice()
+  },
+  'Lupin': {'symbol': 'LUPIN', 'price': generateRandomPrice()},
+  'Zydus Lifesciences': {'symbol': 'ZYDUSLIFE', 'price': generateRandomPrice()},
+  'M&M Financial Services': {
+    'symbol': 'M&MFIN',
+    'price': generateRandomPrice()
+  },
+  'Colgate-Palmolive India': {
+    'symbol': 'COLPAL',
+    'price': generateRandomPrice()
+  },
+  'Britannia Industries': {
+    'symbol': 'BRITANNIA',
+    'price': generateRandomPrice()
+  },
+  'Lupin Limited': {
+    'symbol': 'LUPIN',
+    'price': generateRandomPrice()
+  }, // Duplicate
+  'SBI Mutual Fund': {'symbol': 'SBIMF', 'price': generateRandomPrice()},
+  'Havells India': {'symbol': 'HAVELLS', 'price': generateRandomPrice()},
+  'Mahanagar Gas': {'symbol': 'MAHAGAS', 'price': generateRandomPrice()},
+  'L&T Infotech': {'symbol': 'LTI', 'price': generateRandomPrice()},
+  'Bharat Forge': {'symbol': 'BHARATFORG', 'price': generateRandomPrice()},
+  'BHEL': {'symbol': 'BHEL', 'price': generateRandomPrice()},
+  'Godrej Consumer Products': {
+    'symbol': 'GODREJCP',
+    'price': generateRandomPrice()
+  },
+  'Ultratech Cement': {
+    'symbol': 'ULTRACEMCO',
+    'price': generateRandomPrice()
+  }, // Duplicate
+  'Marico': {'symbol': 'MARICO', 'price': generateRandomPrice()},
+  'Glenmark Pharmaceuticals': {
+    'symbol': 'GLENMARK',
+    'price': generateRandomPrice()
+  },
+  'Sterlite Technologies': {
+    'symbol': 'STERTOOLS',
+    'price': generateRandomPrice()
+  },
+  'Indiabulls Housing Finance': {
+    'symbol': 'IBULHSGFIN',
+    'price': generateRandomPrice()
+  },
+  'Siemens': {'symbol': 'SIEMENS', 'price': generateRandomPrice()},
+  'ABB India': {'symbol': 'ABB', 'price': generateRandomPrice()},
+  'Tata Power': {'symbol': 'TATAPOWER', 'price': generateRandomPrice()},
+  'Jindal Steel & Power': {
+    'symbol': 'JINDALSTEL',
+    'price': generateRandomPrice()
+  },
+  'SpiceJet': {'symbol': 'SPICEJET', 'price': generateRandomPrice()},
+  'Biocon': {'symbol': 'BIOCON', 'price': generateRandomPrice()},
+  'Tata Elxsi': {'symbol': 'TATAELXSI', 'price': generateRandomPrice()},
+  'Dabur India': {'symbol': 'DABUR', 'price': generateRandomPrice()},
+  'South Indian Bank': {'symbol': 'SOUTHBANK', 'price': generateRandomPrice()},
+  'Aurobindo Pharma': {'symbol': 'AUROPHARMA', 'price': generateRandomPrice()},
+  'Ashok Leyland': {'symbol': 'ASHOKLEY', 'price': generateRandomPrice()},
+};
+
+List<String> companyNames = indianStocks.keys.toList();

@@ -22,9 +22,6 @@ class _UserSearchbarState extends State<UserSearchbar> {
           onTap: () {
             controller.openView();
           },
-          onChanged: (_) {
-            controller.openView();
-          },
           hintText: 'Search',
           shape: WidgetStatePropertyAll(
             RoundedRectangleBorder(),
@@ -36,7 +33,7 @@ class _UserSearchbarState extends State<UserSearchbar> {
         List<String> list = [];
 
         for (var i = 0; i < companyNames.length; i++) {
-          if (companyNames[i].contains(controller.text)) {
+          if (companyNames[i].toLowerCase().contains(controller.text.toLowerCase())) {
             list.add(companyNames[i]);
             if (list.length == 5) {
               break;
@@ -51,10 +48,20 @@ class _UserSearchbarState extends State<UserSearchbar> {
               return ListTile(
                 title: Text(item),
                 onTap: () {
-                  setState(() {
-                    controller.closeView(item);
-                    FocusScope.of(context).unfocus();
-                  });
+                  Navigator.of(context)
+                      .push(
+                    MaterialPageRoute(
+                      builder: (context) => StockScreen(
+                        title: list[index],
+                      ),
+                    ),
+                  )
+                      .then(
+                    (value) {
+                      controller.closeView('');
+                      FocusScope.of(context).unfocus();
+                    },
+                  );
                 },
               );
             },
@@ -67,18 +74,20 @@ class _UserSearchbarState extends State<UserSearchbar> {
               return ListTile(
                 title: Text(item),
                 onTap: () {
-                  Navigator.push(
-                    context,
+                  Navigator.of(context)
+                      .push(
                     MaterialPageRoute(
                       builder: (context) => StockScreen(
                         title: list[index],
                       ),
                     ),
+                  )
+                      .then(
+                    (value) {
+                      controller.closeView('');
+                      FocusScope.of(context).unfocus();
+                    },
                   );
-                  setState(() {
-                    controller.closeView(item);
-                    FocusScope.of(context).unfocus();
-                  });
                 },
               );
             },
