@@ -7,7 +7,6 @@ import 'package:portfolio_tracker/screens/holdings.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:jwt_decoder/jwt_decoder.dart';
-import 'package:portfolio_tracker/screens/stock.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -66,7 +65,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             margin: EdgeInsets.symmetric(
               horizontal: 5,
             ),
-            child: UserSearchbar()
+            child: UserSearchbar(email: email,)
           ),
           SizedBox(
             height: 10,

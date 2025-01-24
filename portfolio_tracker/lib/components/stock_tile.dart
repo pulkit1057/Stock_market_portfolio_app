@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:portfolio_tracker/data/listed_companies.dart';
@@ -9,8 +7,10 @@ class StockTile extends StatefulWidget {
   const StockTile({
     super.key,
     required this.title,
+    required this.onAddStock,
   });
   final Map<String, dynamic> title;
+  final void Function(String,String,dynamic)? onAddStock;
 
   @override
   State<StockTile> createState() => _StockTileState();
@@ -44,7 +44,7 @@ class _StockTileState extends State<StockTile> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  widget.title['name'],
+                  widget.title['company_name'],
                   style: TextStyle(fontSize: 17),
                 ),
                 SizedBox(
@@ -57,7 +57,7 @@ class _StockTileState extends State<StockTile> {
                       width: 18,
                     ),
                     Text(
-                      '₹ ${widget.title['price'].toString()}',
+                      '₹ ${indianStocks[widget.title['company_name']]!['price'].toString()}',
                       style: TextStyle(color: Colors.green),
                     ),
                   ],
@@ -76,7 +76,7 @@ class _StockTileState extends State<StockTile> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "${widget.title['name']} ${'\n'}₹ ${indianStocks[widget.title['name']]!['price']}",
+                          "${widget.title['company_name']} ${'\n'}₹ ${indianStocks[widget.title['company_name']]!['price']}",
                         ),
                         TextField(
                           decoration: InputDecoration(
@@ -100,23 +100,8 @@ class _StockTileState extends State<StockTile> {
                           },
                           child: Text('Cancel')),
                       TextButton(
-                        onPressed: () async {
-                          var response = await http.post(
-                            Uri.parse('http://192.168.1.7:5000/add_stock'),
-                            body: jsonEncode({
-                              "email": widget.title['email'],
-                              "name": widget.title['name'],
-                              "action": "buy",
-                              "price":
-                                  indianStocks[widget.title['name']]!['price'],
-                              "quantity": quantity.text
-                            }),
-                            headers: {
-                              'Content-Type': 'application/json; charset=UTF-8',
-                            },
-                          );
-
-                          Navigator.of(context).pop();
+                        onPressed: () {
+                          widget.onAddStock!(widget.title['company_name'],"buy",quantity.text);
                         },
                         child: Text('Submit'),
                       ),
@@ -142,7 +127,7 @@ class _StockTileState extends State<StockTile> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "${widget.title['name']} ${'\n'}₹ ${indianStocks[widget.title['name']]!['price']}",
+                          "${widget.title['company_name']} ${'\n'}₹ ${indianStocks[widget.title['company_name']]!['price']}",
                         ),
                         TextField(
                           decoration: InputDecoration(
@@ -166,25 +151,8 @@ class _StockTileState extends State<StockTile> {
                           },
                           child: Text('Cancel')),
                       TextButton(
-                        onPressed: () async {
-                          var response = await http.post(
-                            Uri.parse('http://192.168.1.7:5000/add_stock'),
-                            body: jsonEncode({
-                              "email": widget.title['email'],
-                              "name": widget.title['name'],
-                              "action": "sell",
-                              "price":
-                                  indianStocks[widget.title['name']]!['price'],
-                              "quantity": quantity.text
-                            }),
-                            headers: {
-                              'Content-Type': 'application/json; charset=UTF-8',
-                            },
-                          );
-                          setState(() {
-                            print(jsonDecode(response.body));
-                            Navigator.of(context).pop();
-                          });
+                        onPressed: (){
+                          widget.onAddStock!(widget.title['company_name'],"sell",quantity.text);
                         },
                         child: Text('Submit'),
                       ),
@@ -202,3 +170,4 @@ class _StockTileState extends State<StockTile> {
     );
   }
 }
+

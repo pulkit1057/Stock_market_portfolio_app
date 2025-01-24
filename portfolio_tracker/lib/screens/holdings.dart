@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:portfolio_tracker/components/stock_tile.dart';
 import 'package:http/http.dart' as http;
+import 'package:portfolio_tracker/data/listed_companies.dart';
 
 class HoldingsScreen extends StatefulWidget {
   const HoldingsScreen({
@@ -36,6 +37,26 @@ class _HoldingsScreenState extends State<HoldingsScreen> {
     });
   }
 
+  void onAddStockasync(name, action, quantity) async {
+    var response = await http.post(
+      Uri.parse('http://192.168.1.7:5000/add_stock'),
+      body: jsonEncode({
+        "email": widget.email,
+        "name": name,
+        "action": action,
+        "price": indianStocks[name]!['price'],
+        "quantity": quantity
+      }),
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+    setState(() {
+      Navigator.of(context).pop();
+      get_holdings();
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -51,7 +72,10 @@ class _HoldingsScreenState extends State<HoldingsScreen> {
       body: ListView.builder(
         itemCount: userHoldings.length,
         itemBuilder: (context, index) {
-          return StockTile(title: userHoldings[index]);
+          return StockTile(
+            title: userHoldings[index],
+            onAddStock: onAddStockasync,
+          );
         },
       ),
     );

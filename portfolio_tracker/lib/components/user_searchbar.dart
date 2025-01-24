@@ -3,7 +3,8 @@ import 'package:portfolio_tracker/data/listed_companies.dart';
 import 'package:portfolio_tracker/screens/stock.dart';
 
 class UserSearchbar extends StatefulWidget {
-  const UserSearchbar({super.key});
+  const UserSearchbar({super.key,required this.email});
+  final String email;
 
   @override
   State<UserSearchbar> createState() => _UserSearchbarState();
@@ -53,6 +54,7 @@ class _UserSearchbarState extends State<UserSearchbar> {
                     MaterialPageRoute(
                       builder: (context) => StockScreen(
                         title: list[index],
+                        email: widget.email,
                       ),
                     ),
                   )
@@ -79,6 +81,7 @@ class _UserSearchbarState extends State<UserSearchbar> {
                     MaterialPageRoute(
                       builder: (context) => StockScreen(
                         title: list[index],
+                        email: widget.email,
                       ),
                     ),
                   )
