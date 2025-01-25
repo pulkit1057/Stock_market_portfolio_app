@@ -7,6 +7,8 @@ import 'package:portfolio_tracker/screens/holdings.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:portfolio_tracker/theme/theme_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -102,15 +104,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   );
 
                   bool? isDark = prefs.getBool('theme');
-
-                  setState(() {
-                    if (isDark == null) {
-                      prefs.setBool('theme', true);
-                    } else {
-                      prefs.setBool('theme', !isDark);
-                    }
-                    print(prefs.getBool('theme'));
-                  });
+                  if (isDark == null) {
+                    prefs.setBool('theme', true);
+                  } else {
+                    prefs.setBool('theme', !isDark);
+                  }
+                  Provider.of<ThemeProvider>(context, listen: false)
+                      .toggleTheme();
                 },
                 child: Text('theme')),
             Spacer(),
@@ -143,7 +143,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
               padding: EdgeInsets.symmetric(horizontal: 50, vertical: 30),
               margin: EdgeInsets.only(left: 4),
               decoration: BoxDecoration(
-                  color: Colors.amber, borderRadius: BorderRadius.circular(5)),
+                color: Colors.amber,
+                borderRadius: BorderRadius.circular(5),
+              ),
               child: Text('List of Holdings'),
             ),
           ),

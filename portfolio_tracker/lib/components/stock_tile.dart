@@ -31,7 +31,7 @@ class _StockTileState extends State<StockTile> {
       padding: EdgeInsets.symmetric(horizontal: 5),
       margin: EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.onPrimary,
+        color: Theme.of(context).colorScheme.primary,
         borderRadius: BorderRadius.circular(8),
       ),
       child: Container(

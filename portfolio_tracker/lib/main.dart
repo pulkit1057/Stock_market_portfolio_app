@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:portfolio_tracker/screens/auth.dart';
 import 'package:portfolio_tracker/screens/dashboard.dart';
+import 'package:portfolio_tracker/theme/dark_mode.dart';
 import 'package:portfolio_tracker/theme/theme_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,7 +17,6 @@ void main() async {
   );
 
   String? token = prefs.getString('token');
-  bool? isDark = prefs.getBool('theme');
   runApp(
     MultiProvider(
       providers: [
@@ -41,25 +41,13 @@ class MyApp extends StatelessWidget {
   final token;
   final SharedPreferencesWithCache prefs;
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   if (token == '' || token == null || JwtDecoder.isExpired(token)) {
-  //     return MaterialApp(
-  //       theme: Provider.of<ThemeProvider>(context).themeData,
-  //       home: AuthScreen(
-  //         prefs: prefs,
-  //       ),
-  //     );
-  //   } else {
-  //     return DashboardScreen(
-  //       token: token,
-  //     );
-  //   }
-  // }
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
+    // var isDark = prefs.getBool('theme');
+
+    
     return MaterialApp(
-      theme: Provider.of<ThemeProvider>(context).themeData,
+      theme:  Provider.of<ThemeProvider>(context).themeData,
       home: token == '' || token == null || JwtDecoder.isExpired(token)
           ? AuthScreen(
               prefs: prefs,
