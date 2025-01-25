@@ -117,7 +117,7 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade200,
+      // backgroundColor: Colors.grey.shade200,
       body: Padding(
         padding: const EdgeInsets.all(18.0),
         child: Container(

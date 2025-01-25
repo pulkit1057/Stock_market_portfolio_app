@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:portfolio_tracker/components/user_searchbar.dart';
-import 'package:portfolio_tracker/config.dart';
+import 'package:portfolio_tracker/data/listed_companies.dart';
 import 'package:portfolio_tracker/screens/auth.dart';
 import 'package:portfolio_tracker/screens/holdings.dart';
 import 'package:http/http.dart' as http;
@@ -22,10 +22,34 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   late String email;
-  final Map<String, double> dataMap = {
-    "stocks": 26,
-    "mutual funds": 55,
-  };
+  List<dynamic> userHoldings = [];
+  Map<String, double> dataMap = {"stocks": 5};
+
+  void getHoldings() async {
+    var response = await http.post(
+      Uri.parse(
+        'http://192.168.1.7:5000/get_holdings',
+      ),
+      body: jsonEncode({
+        "email": email,
+      }),
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+
+    var decodedResponse = jsonDecode(response.body);
+    setState(() {
+      userHoldings = decodedResponse['data'];
+    });
+    dataMap.remove('stocks');
+    for (int i = 0; i < userHoldings.length; i++) {
+      dataMap[userHoldings[i]['company_name']] = double.parse((userHoldings[i]
+                  ['quantity'] *
+              indianStocks[userHoldings[i]['company_name']]!['price'])
+          .toString());
+    }
+  }
 
   @override
   void initState() {
@@ -33,11 +57,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     Map<String, dynamic> jwtDecodedToken = JwtDecoder.decode(widget.token);
     email = jwtDecodedToken['email'];
+
+    getHoldings();
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Portfolios'),
@@ -58,15 +83,51 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
         ],
       ),
+      drawer: Drawer(
+        child: Column(
+          children: [
+            DrawerHeader(
+              child: Icon(Icons.stacked_bar_chart),
+            ),
+            Text('Theme'),
+            TextButton(
+                onPressed: () async {
+                  final prefs = await SharedPreferencesWithCache.create(
+                    cacheOptions: SharedPreferencesWithCacheOptions(
+                      allowList: <String>{
+                        'token',
+                        'theme',
+                      },
+                    ),
+                  );
+
+                  bool? isDark = prefs.getBool('theme');
+
+                  setState(() {
+                    if (isDark == null) {
+                      prefs.setBool('theme', true);
+                    } else {
+                      prefs.setBool('theme', !isDark);
+                    }
+                    print(prefs.getBool('theme'));
+                  });
+                },
+                child: Text('theme')),
+            Spacer(),
+            Text('Log out'),
+          ],
+        ),
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            margin: EdgeInsets.symmetric(
-              horizontal: 5,
-            ),
-            child: UserSearchbar(email: email,)
-          ),
+              margin: EdgeInsets.symmetric(
+                horizontal: 5,
+              ),
+              child: UserSearchbar(
+                email: email,
+              )),
           SizedBox(
             height: 10,
           ),
@@ -93,29 +154,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
             dataMap: dataMap,
             chartValuesOptions: ChartValuesOptions(decimalPlaces: 1),
           ),
-          ElevatedButton(
-            onPressed: () async {
-              final response = await http.get(
-                Uri.parse(
-                  url,
-                ),
-              );
-              var body = jsonDecode(response.body);
-              print(body);
-              var map = body['Time Series (5min)'];
-              // print(map.values);
-              for (var i in map.values) {
-                // print(i.key);
-                print(i['1. open']);
-              }
-
-              for (var i in map.keys) {
-                print(i);
-              }
-            },
-            child: Text('button'),
-          ),
-          Text(email)
         ],
       ),
     );

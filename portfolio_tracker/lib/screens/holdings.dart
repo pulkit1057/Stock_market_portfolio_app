@@ -18,7 +18,7 @@ class HoldingsScreen extends StatefulWidget {
 
 class _HoldingsScreenState extends State<HoldingsScreen> {
   List<dynamic> userHoldings = [];
-  void get_holdings() async {
+  void getHoldings() async {
     var response = await http.post(
       Uri.parse(
         'http://192.168.1.7:5000/get_holdings',
@@ -53,20 +53,22 @@ class _HoldingsScreenState extends State<HoldingsScreen> {
     );
     setState(() {
       Navigator.of(context).pop();
-      get_holdings();
+      getHoldings();
     });
   }
 
   @override
   void initState() {
     super.initState();
-    get_holdings();
+    getHoldings();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.primary,
         title: Text("Stock Holdings"),
       ),
       body: ListView.builder(

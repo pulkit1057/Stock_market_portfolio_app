@@ -10,7 +10,7 @@ class StockTile extends StatefulWidget {
     required this.onAddStock,
   });
   final Map<String, dynamic> title;
-  final void Function(String,String,dynamic)? onAddStock;
+  final void Function(String, String, dynamic)? onAddStock;
 
   @override
   State<StockTile> createState() => _StockTileState();
@@ -31,7 +31,7 @@ class _StockTileState extends State<StockTile> {
       padding: EdgeInsets.symmetric(horizontal: 5),
       margin: EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Colors.grey.shade300,
+        color: Theme.of(context).colorScheme.onPrimary,
         borderRadius: BorderRadius.circular(8),
       ),
       child: Container(
@@ -101,7 +101,9 @@ class _StockTileState extends State<StockTile> {
                           child: Text('Cancel')),
                       TextButton(
                         onPressed: () {
-                          widget.onAddStock!(widget.title['company_name'],"buy",quantity.text);
+                          widget.onAddStock!(widget.title['company_name'],
+                              "buy", quantity.text);
+                          quantity.clear();
                         },
                         child: Text('Submit'),
                       ),
@@ -151,8 +153,10 @@ class _StockTileState extends State<StockTile> {
                           },
                           child: Text('Cancel')),
                       TextButton(
-                        onPressed: (){
-                          widget.onAddStock!(widget.title['company_name'],"sell",quantity.text);
+                        onPressed: () {
+                          widget.onAddStock!(widget.title['company_name'],
+                              "sell", quantity.text);
+                          quantity.clear();
                         },
                         child: Text('Submit'),
                       ),
@@ -170,4 +174,3 @@ class _StockTileState extends State<StockTile> {
     );
   }
 }
-
