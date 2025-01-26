@@ -113,6 +113,7 @@ class _StockTileState extends State<StockTile> {
               },
               child: Icon(
                 Icons.shop_rounded,
+                color: Theme.of(context).colorScheme.secondary,
               ),
             ),
             SizedBox(
@@ -154,6 +155,17 @@ class _StockTileState extends State<StockTile> {
                           child: Text('Cancel')),
                       TextButton(
                         onPressed: () {
+                          if (int.parse(quantity.text) >
+                              widget.title['quantity']) {
+                            ScaffoldMessenger.of(context).clearSnackBars();
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                    'You dont have these many stocks to sell'),
+                              ),
+                            );
+                            return;
+                          }
                           widget.onAddStock!(widget.title['company_name'],
                               "sell", quantity.text);
                           quantity.clear();
@@ -166,6 +178,7 @@ class _StockTileState extends State<StockTile> {
               },
               child: Icon(
                 Icons.sell,
+                color: Theme.of(context).colorScheme.secondary,
               ),
             ),
           ],

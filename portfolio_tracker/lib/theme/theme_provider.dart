@@ -13,18 +13,18 @@ class ThemeProvider extends ChangeNotifier {
 
   void setup() async {
     final prefs = await SharedPreferencesWithCache.create(
-        cacheOptions: SharedPreferencesWithCacheOptions(
-            allowList: <String>{'theme'}));
+      cacheOptions: SharedPreferencesWithCacheOptions(
+        allowList: <String>{'theme'},
+      ),
+    );
     var isDark = prefs.getBool('theme');
-    if(isDark == null || isDark == false){
+    if (isDark == null || isDark == false) {
       _themeData = lightMode;
-    }
-    else{
+    } else {
       _themeData = darkMode;
     }
     notifyListeners();
   }
-
 
   bool get isDarkMode => _themeData == darkMode;
 

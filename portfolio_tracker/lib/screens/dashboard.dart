@@ -43,23 +43,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
     var decodedResponse = jsonDecode(response.body);
     setState(() {
       userHoldings = decodedResponse['data'];
+      dataMap.remove('stocks');
+      for (int i = 0; i < userHoldings.length; i++) {
+        dataMap[userHoldings[i]['company_name']] = double.parse((userHoldings[i]
+                    ['quantity'] *
+                indianStocks[userHoldings[i]['company_name']]!['price'])
+            .toString());
+      }
     });
-    dataMap.remove('stocks');
-    for (int i = 0; i < userHoldings.length; i++) {
-      dataMap[userHoldings[i]['company_name']] = double.parse((userHoldings[i]
-                  ['quantity'] *
-              indianStocks[userHoldings[i]['company_name']]!['price'])
-          .toString());
-    }
   }
 
   @override
   void initState() {
     super.initState();
-
     Map<String, dynamic> jwtDecodedToken = JwtDecoder.decode(widget.token);
     email = jwtDecodedToken['email'];
-
     getHoldings();
   }
 
@@ -80,6 +78,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   prefs: prefs,
                 ),
               ));
+              ScaffoldMessenger.of(context).clearSnackBars();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('User logged out successfully'),
+                ),
+              );
             },
             icon: Icon(Icons.logout),
           ),

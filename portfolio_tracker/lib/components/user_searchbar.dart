@@ -14,8 +14,10 @@ class _UserSearchbarState extends State<UserSearchbar> {
   @override
   Widget build(BuildContext context) {
     return SearchAnchor(
+      // viewSurfaceTintColor: Theme.of(context).colorScheme.primary,
       builder: (context, controller) {
         return SearchBar(
+          backgroundColor: WidgetStateProperty.all(Theme.of(context).colorScheme.primary),
           controller: controller,
           leading: Icon(
             Icons.search,
