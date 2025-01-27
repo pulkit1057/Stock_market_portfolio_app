@@ -3,8 +3,13 @@ import 'package:portfolio_tracker/data/listed_companies.dart';
 import 'package:portfolio_tracker/screens/stock.dart';
 
 class UserSearchbar extends StatefulWidget {
-  const UserSearchbar({super.key,required this.email});
+  const UserSearchbar({
+    super.key,
+    required this.email,
+    required this.reload,
+  });
   final String email;
+  final void Function()? reload;
 
   @override
   State<UserSearchbar> createState() => _UserSearchbarState();
@@ -17,7 +22,8 @@ class _UserSearchbarState extends State<UserSearchbar> {
       // viewSurfaceTintColor: Theme.of(context).colorScheme.primary,
       builder: (context, controller) {
         return SearchBar(
-          backgroundColor: WidgetStateProperty.all(Theme.of(context).colorScheme.primary),
+          backgroundColor:
+              WidgetStateProperty.all(Theme.of(context).colorScheme.primary),
           controller: controller,
           leading: Icon(
             Icons.search,
@@ -36,7 +42,9 @@ class _UserSearchbarState extends State<UserSearchbar> {
         List<String> list = [];
 
         for (var i = 0; i < companyNames.length; i++) {
-          if (companyNames[i].toLowerCase().contains(controller.text.toLowerCase())) {
+          if (companyNames[i]
+              .toLowerCase()
+              .contains(controller.text.toLowerCase())) {
             list.add(companyNames[i]);
             if (list.length == 5) {
               break;
@@ -57,6 +65,7 @@ class _UserSearchbarState extends State<UserSearchbar> {
                       builder: (context) => StockScreen(
                         title: list[index],
                         email: widget.email,
+                        reload: widget.reload,
                       ),
                     ),
                   )
@@ -84,6 +93,7 @@ class _UserSearchbarState extends State<UserSearchbar> {
                       builder: (context) => StockScreen(
                         title: list[index],
                         email: widget.email,
+                        reload: widget.reload,
                       ),
                     ),
                   )

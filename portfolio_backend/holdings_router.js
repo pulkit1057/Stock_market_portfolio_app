@@ -12,6 +12,13 @@ router.post('/add_stock', async (req, res) => {
         if (response[0][0]['cnt'] === 1) {
             if (action === 'sell') {
                 await db.query(`update global_holdings set quantity = quantity - ${quantity} where email='${email}' and company_name = '${name}'`)
+
+                var isdilluted = await db.query(`select quantity from global_holdings where email='${email}' and company_name = '${name}'`)
+
+                if(isdilluted[0][0]['quantity'] == 0)
+                {
+                    await db.query(`delete from global_holdings where email='${email}' and company_name = '${name}'`)
+                }
             }
             else
             {

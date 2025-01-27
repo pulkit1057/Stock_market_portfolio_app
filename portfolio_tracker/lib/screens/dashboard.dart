@@ -43,8 +43,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
     var decodedResponse = jsonDecode(response.body);
     setState(() {
       userHoldings = decodedResponse['data'];
-      dataMap.remove('stocks');
+      dataMap = {};
+      if (userHoldings.isEmpty) {
+        dataMap = {'stocks': 32};
+      }
       for (int i = 0; i < userHoldings.length; i++) {
+        print(userHoldings.length);
         dataMap[userHoldings[i]['company_name']] = double.parse((userHoldings[i]
                     ['quantity'] *
                 indianStocks[userHoldings[i]['company_name']]!['price'])
@@ -131,6 +135,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
               child: UserSearchbar(
                 email: email,
+                reload: getHoldings,
               )),
           SizedBox(
             height: 10,
@@ -139,7 +144,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => HoldingsScreen(email: email),
+                  builder: (context) => HoldingsScreen(
+                    email: email,
+                    reload: getHoldings,
+                  ),
                 ),
               );
             },
@@ -156,10 +164,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
           SizedBox(
             height: 30,
           ),
-          PieChart(
-            dataMap: dataMap,
-            chartValuesOptions: ChartValuesOptions(decimalPlaces: 1),
-          ),
+          if (userHoldings.isNotEmpty)
+            PieChart(
+              dataMap: dataMap,
+              chartValuesOptions: ChartValuesOptions(decimalPlaces: 2),
+            ),
         ],
       ),
     );

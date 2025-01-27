@@ -1,18 +1,20 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:portfolio_tracker/data/listed_companies.dart';
-import 'package:http/http.dart' as http; 
+import 'package:http/http.dart' as http;
+import 'package:portfolio_tracker/screens/paymet.dart';
 
 class StockScreen extends StatefulWidget {
   const StockScreen({
     super.key,
     required this.title,
     required this.email,
+    required this.reload,
   });
   final String title;
   final String email;
+  final void Function()? reload;
 
   @override
   State<StockScreen> createState() => _StockScreenState();
@@ -36,7 +38,8 @@ class _StockScreenState extends State<StockScreen> {
               onPressed: () {
                 showDialog(
                   context: context,
-                  builder: (context) => AlertDialog(title: Text('Adding a stock'),
+                  builder: (context) => AlertDialog(
+                    title: Text('Adding a stock'),
                     content: Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,8 +76,7 @@ class _StockScreenState extends State<StockScreen> {
                               "email": widget.email,
                               "name": widget.title,
                               "action": "buy",
-                              "price":
-                                  indianStocks[widget.title]!['price'],
+                              "price": indianStocks[widget.title]!['price'],
                               "quantity": quantity.text
                             }),
                             headers: {
@@ -82,6 +84,10 @@ class _StockScreenState extends State<StockScreen> {
                             },
                           );
                           Navigator.of(context).pop();
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => PaymentScreen(),
+                          ));
+                          widget.reload!();
                         },
                         child: Text('Submit'),
                       ),

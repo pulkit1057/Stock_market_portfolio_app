@@ -1,16 +1,18 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:portfolio_tracker/components/stock_tile.dart';
 import 'package:http/http.dart' as http;
 import 'package:portfolio_tracker/data/listed_companies.dart';
+import 'package:portfolio_tracker/screens/paymet.dart';
 
 class HoldingsScreen extends StatefulWidget {
   const HoldingsScreen({
     super.key,
     required this.email,
+    required this.reload,
   });
   final String email;
+  final void Function()? reload;
 
   @override
   State<HoldingsScreen> createState() => _HoldingsScreenState();
@@ -54,6 +56,14 @@ class _HoldingsScreenState extends State<HoldingsScreen> {
     setState(() {
       Navigator.of(context).pop();
       getHoldings();
+      if (action == 'buy') {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => PaymentScreen(),
+          ),
+        );
+      }
+      widget.reload!();
     });
   }
 
