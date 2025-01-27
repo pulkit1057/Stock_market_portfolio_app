@@ -41,6 +41,7 @@ dependencies:
   jwt_decoder: ^2.0.1
   provider: ^6.1.2
   icons_plus: ^5.0.0
+  external_app_launcher: ^4.0.1
 
 dev_dependencies:
   flutter_test:

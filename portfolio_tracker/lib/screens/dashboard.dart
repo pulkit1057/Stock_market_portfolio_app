@@ -48,7 +48,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
         dataMap = {'stocks': 32};
       }
       for (int i = 0; i < userHoldings.length; i++) {
-        print(userHoldings.length);
         dataMap[userHoldings[i]['company_name']] = double.parse((userHoldings[i]
                     ['quantity'] *
                 indianStocks[userHoldings[i]['company_name']]!['price'])
@@ -99,7 +98,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
             DrawerHeader(
               child: Icon(Icons.stacked_bar_chart),
             ),
-            Text('Theme'),
             TextButton(
                 onPressed: () async {
                   final prefs = await SharedPreferencesWithCache.create(
@@ -120,7 +118,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   Provider.of<ThemeProvider>(context, listen: false)
                       .toggleTheme();
                 },
-                child: Text('theme')),
+                child: Text('Theme')),
             Spacer(),
             Text('Log out'),
           ],
@@ -162,13 +160,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
           ),
           SizedBox(
-            height: 30,
+            height: 80,
           ),
-          if (userHoldings.isNotEmpty)
-            PieChart(
-              dataMap: dataMap,
-              chartValuesOptions: ChartValuesOptions(decimalPlaces: 2),
-            ),
+          userHoldings.isNotEmpty
+              ? PieChart(
+                  dataMap: dataMap,
+                  chartValuesOptions: ChartValuesOptions(decimalPlaces: 2),
+                )
+              : Center(
+                  heightFactor: 20,
+                  child: Text(
+                    'Currently you dont hold any holdings !!!',
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: Theme.of(context).colorScheme.secondary),
+                  ),
+                ),
         ],
       ),
     );

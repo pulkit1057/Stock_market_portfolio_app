@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:portfolio_tracker/components/stock_tile.dart';
 import 'package:http/http.dart' as http;
 import 'package:portfolio_tracker/data/listed_companies.dart';
-import 'package:portfolio_tracker/screens/paymet.dart';
+import 'package:portfolio_tracker/screens/payment.dart';
 
 class HoldingsScreen extends StatefulWidget {
   const HoldingsScreen({
@@ -81,15 +81,25 @@ class _HoldingsScreenState extends State<HoldingsScreen> {
         backgroundColor: Theme.of(context).colorScheme.surface,
         title: Text("Stock Holdings"),
       ),
-      body: ListView.builder(
-        itemCount: userHoldings.length,
-        itemBuilder: (context, index) {
-          return StockTile(
-            title: userHoldings[index],
-            onAddStock: onAddStockasync,
-          );
-        },
-      ),
+      body: userHoldings.isNotEmpty
+          ? ListView.builder(
+              itemCount: userHoldings.length,
+              itemBuilder: (context, index) {
+                return StockTile(
+                  title: userHoldings[index],
+                  onAddStock: onAddStockasync,
+                );
+              },
+            )
+          : Center(
+              child: Text(
+                'Currently you dont hold any holdings !!!',
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
+              ),
+            ),
     );
   }
 }

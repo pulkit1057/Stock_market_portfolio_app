@@ -1,3 +1,4 @@
+import 'package:external_app_launcher/external_app_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
 
@@ -43,7 +44,11 @@ class PaymentScreen extends StatelessWidget {
                 size: 20,
               ),
               title: Text('UPI'),
-              onTap: () {},
+              onTap: () async{
+                await LaunchApp.openApp(
+                  androidPackageName: 'com.google.android.youtube'
+                );
+              },
             ),
           ],
         ),

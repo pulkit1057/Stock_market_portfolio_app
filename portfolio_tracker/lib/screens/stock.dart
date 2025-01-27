@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:portfolio_tracker/data/listed_companies.dart';
 import 'package:http/http.dart' as http;
-import 'package:portfolio_tracker/screens/paymet.dart';
+import 'package:portfolio_tracker/screens/payment.dart';
 
 class StockScreen extends StatefulWidget {
   const StockScreen({
