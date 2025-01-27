@@ -93,7 +93,7 @@ class _HoldingsScreenState extends State<HoldingsScreen> {
             )
           : Center(
               child: Text(
-                'Currently you dont hold any holdings !!!',
+                "Currently you don't hold any holdings !!!",
                 style: TextStyle(
                   fontSize: 18,
                   color: Theme.of(context).colorScheme.secondary,

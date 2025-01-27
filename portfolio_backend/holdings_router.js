@@ -15,19 +15,16 @@ router.post('/add_stock', async (req, res) => {
 
                 var isdilluted = await db.query(`select quantity from global_holdings where email='${email}' and company_name = '${name}'`)
 
-                if(isdilluted[0][0]['quantity'] == 0)
-                {
+                if (isdilluted[0][0]['quantity'] == 0) {
                     await db.query(`delete from global_holdings where email='${email}' and company_name = '${name}'`)
                 }
             }
-            else
-            {
+            else {
                 await db.query(`update global_holdings set quantity = quantity + ${quantity} where email='${email}' and company_name = '${name}'`)
             }
         }
-        else{
-            if(action === 'sell')
-            {
+        else {
+            if (action === 'sell') {
                 return res.json({ status: false, message: "Cannot aell a stock which you don't own" })
             }
             await db.query(`insert into global_holdings(email,company_name,quantity) values('${email}','${name}',${quantity})`)
@@ -48,7 +45,6 @@ router.post('/get_holdings', async (req, res) => {
         const { email } = req.body
 
         const response = await db.query(`select * from global_holdings where email='${email}'`)
-        // console.log(response[0]);
 
         return res.json({ status: true, data: response[0], })
     } catch (error) {
@@ -57,14 +53,14 @@ router.post('/get_holdings', async (req, res) => {
 })
 
 
-router.post('/add_stocks', async (req, res) => {
-    var { email, symbol, bought_price, quantity } = req.body;
+router.post('/transactions_history', async (req, res) => {
 
-    const response = await db.query(`select * from holdings where email='${email}' and symbol='${symbol}'`)
+    try {
+        var { email } = req.body;
+        const response = await db.query(`select * from holdings where email='${email}'`)
+        res.json({status:true,data:response[0]})
+    } catch (error) {
 
-    if (response[0].length === 1) {
-        const r = await db.query(`update holdings set quantity = quantity + ${quantity} where email='${email}' and symbol='${symbol}'`)
-        return res.json({ status: true, message: "Updated old stock to the portfolio" })
     }
 
 })

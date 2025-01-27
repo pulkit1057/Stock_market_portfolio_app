@@ -7,6 +7,7 @@ import 'package:portfolio_tracker/screens/holdings.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:portfolio_tracker/screens/transactions.dart';
 import 'package:portfolio_tracker/theme/theme_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -136,28 +137,53 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 reload: getHoldings,
               )),
           SizedBox(
-            height: 10,
+            height: 20,
           ),
-          GestureDetector(
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => HoldingsScreen(
-                    email: email,
-                    reload: getHoldings,
+          Row(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => HoldingsScreen(
+                        email: email,
+                        reload: getHoldings,
+                      ),
+                    ),
+                  );
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 30),
+                  margin: EdgeInsets.only(left: 8),
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 45, 39, 111),
+                    borderRadius: BorderRadius.circular(5),
                   ),
+                  child: Text('List of Holdings'),
                 ),
-              );
-            },
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 50, vertical: 30),
-              margin: EdgeInsets.only(left: 4),
-              decoration: BoxDecoration(
-                color: Colors.amber,
-                borderRadius: BorderRadius.circular(5),
               ),
-              child: Text('List of Holdings'),
-            ),
+              Spacer(),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => TransactionsScreen(
+                        email: email,
+                      ),
+                    ),
+                  );
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 30),
+                  margin: EdgeInsets.only(right: 8),
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 45, 39, 111),
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Text('Transaction history'),
+                ),
+              ),
+            ],
           ),
           SizedBox(
             height: 80,
@@ -170,7 +196,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               : Center(
                   heightFactor: 20,
                   child: Text(
-                    'Currently you dont hold any holdings !!!',
+                    "Currently you don't hold any holdings !!!",
                     style: TextStyle(
                         fontSize: 18,
                         color: Theme.of(context).colorScheme.secondary),

@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:portfolio_tracker/data/listed_companies.dart';
 import 'package:http/http.dart' as http;
+import 'package:portfolio_tracker/models/chart.dart';
 import 'package:portfolio_tracker/screens/payment.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 class StockScreen extends StatefulWidget {
   const StockScreen({
@@ -22,6 +24,14 @@ class StockScreen extends StatefulWidget {
 
 class _StockScreenState extends State<StockScreen> {
   TextEditingController quantity = TextEditingController();
+  late TooltipBehavior _toolTipBehavior;
+
+  @override
+  void initState() {
+    _toolTipBehavior = TooltipBehavior(enable: true);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,11 +40,13 @@ class _StockScreenState extends State<StockScreen> {
       ),
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              indianStocks[widget.title]!['price'].toString(),
+              '₹ ' + indianStocks[widget.title]!['price'].toString(),
             ),
-            TextButton(
+            SizedBox(height: 8,),
+            ElevatedButton(
               onPressed: () {
                 showDialog(
                   context: context,
@@ -95,8 +107,37 @@ class _StockScreenState extends State<StockScreen> {
                   ),
                 );
               },
-              child: Text('Buy'),
+              style: ButtonStyle(
+                elevation: WidgetStatePropertyAll(4),
+                backgroundColor: WidgetStatePropertyAll(Theme.of(context).colorScheme.inversePrimary)
+              ),
+              child: Text(
+                'Buy',
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ),
             ),
+            SfCartesianChart(
+              primaryXAxis: CategoryAxis(),
+              tooltipBehavior: _toolTipBehavior,
+              margin: EdgeInsets.all(20),
+              series: [
+                LineSeries<Chart, String>(
+                  dataSource: <Chart>[
+                    Chart("1-jan-25", 3),
+                    Chart("2-jan-25", 5),
+                    Chart("3-jan-25", 6),
+                    Chart("4-jan-25", 5),
+                    Chart("5-jan-25", 4),
+                    Chart("6-jan-25", 8),
+                  ],
+                  dataLabelSettings: DataLabelSettings(isVisible: true),
+                  xValueMapper: (Chart point, _) => point.date,
+                  yValueMapper: (Chart point, index) => point.price,
+                )
+              ],
+            )
           ],
         ),
       ),

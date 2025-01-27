@@ -7,7 +7,6 @@ class PaymentScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // List<String> paymentMethods = ["Credit Card", "Debit Card", "UPI"];
     return Scaffold(
       appBar: AppBar(),
       body: Container(
