@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
+import 'package:portfolio_tracker/components/news_component.dart';
 import 'package:portfolio_tracker/components/user_searchbar.dart';
 import 'package:portfolio_tracker/data/listed_companies.dart';
 import 'package:portfolio_tracker/screens/auth.dart';
@@ -11,6 +12,7 @@ import 'package:portfolio_tracker/screens/transactions.dart';
 import 'package:portfolio_tracker/theme/theme_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({
@@ -99,6 +101,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
             DrawerHeader(
               child: Icon(Icons.stacked_bar_chart),
             ),
+            SizedBox(
+              height: 12,
+            ),
             TextButton(
                 onPressed: () async {
                   final prefs = await SharedPreferencesWithCache.create(
@@ -125,84 +130,113 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ],
         ),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-              margin: EdgeInsets.symmetric(
-                horizontal: 5,
-              ),
-              child: UserSearchbar(
-                email: email,
-                reload: getHoldings,
-              )),
-          SizedBox(
-            height: 20,
-          ),
-          Row(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => HoldingsScreen(
-                        email: email,
-                        reload: getHoldings,
-                      ),
-                    ),
-                  );
-                },
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 30),
-                  margin: EdgeInsets.only(left: 8),
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 45, 39, 111),
-                    borderRadius: BorderRadius.circular(5),
+              Container(
+                  margin: EdgeInsets.symmetric(
+                    horizontal: 5,
                   ),
-                  child: Text('List of Holdings'),
-                ),
+                  child: UserSearchbar(
+                    email: email,
+                    reload: getHoldings,
+                  )),
+              SizedBox(
+                height: 20,
               ),
-              Spacer(),
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => TransactionsScreen(
-                        email: email,
+              Row(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => HoldingsScreen(
+                            email: email,
+                            reload: getHoldings,
+                          ),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 50, vertical: 30),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.primaryContainer,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Text('List of Holdings'),
+                    ),
+                  ),
+                  Spacer(),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => TransactionsScreen(
+                            email: email,
+                          ),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 50, vertical: 30),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.primaryContainer,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Text('Transaction history'),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 80,
+              ),
+              userHoldings.isNotEmpty
+                  ? PieChart(
+                      dataMap: dataMap,
+                      chartValuesOptions: ChartValuesOptions(decimalPlaces: 2),
+                    )
+                  : 
+                   Center(
+                      // heightFactor: 20,
+                      child: Text(
+                        "Currently you don't hold any holdings !!!",
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
                       ),
                     ),
+              SizedBox(
+                height: 80,
+              ),
+              Text(
+                'Trending News',
+                style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 30,),
+              CarouselSlider(
+                items: [1, 2, 3, 4, 5].map((e) {
+                  return Builder(
+                    builder: (context) {
+                      return NewsComponent(
+                        index: e,
+                      );
+                    },
                   );
-                },
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 30),
-                  margin: EdgeInsets.only(right: 8),
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 45, 39, 111),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Text('Transaction history'),
+                }).toList(),
+                options: CarouselOptions(
+                  autoPlay: true,
+                  viewportFraction: 0.8,
+                  enlargeCenterPage: true,
                 ),
               ),
             ],
           ),
-          SizedBox(
-            height: 80,
-          ),
-          userHoldings.isNotEmpty
-              ? PieChart(
-                  dataMap: dataMap,
-                  chartValuesOptions: ChartValuesOptions(decimalPlaces: 2),
-                )
-              : Center(
-                  heightFactor: 20,
-                  child: Text(
-                    "Currently you don't hold any holdings !!!",
-                    style: TextStyle(
-                        fontSize: 18,
-                        color: Theme.of(context).colorScheme.secondary),
-                  ),
-                ),
-        ],
+        ),
       ),
     );
   }
