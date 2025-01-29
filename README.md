@@ -54,8 +54,6 @@ The Stock Market Portfolio App is a mobile application built using Flutter and D
    flutter run
    ```
 
-## Screenshots
-(Add relevant screenshots of the app here)
 
 ## Future Enhancements
 - Implement user authentication.
