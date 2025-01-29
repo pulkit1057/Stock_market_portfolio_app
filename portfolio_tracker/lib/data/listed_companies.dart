@@ -158,3 +158,11 @@ Map<String, Map<String, dynamic>> indianStocks = {
 };
 
 List<String> companyNames = indianStocks.keys.toList();
+
+List<String> news = [
+  "On December 5, 2024, the BSE Sensex surged by 809.53 points, closing at 81,765.86, while the NSE Nifty50 climbed 240.95 points to end at 24,708.40.",
+  "Mazagon Dock Shipbuilders reported a 75.7% year-on-year increase in consolidated net profit, reaching ₹585.08 crore for the September quarter.",
+  "Despite a 6.2% decline in net profit to ₹44.95 crore for the second quarter of the 2024-25 financial year, Saregama India Ltd experienced a 40.5% increase in revenue.",
+  "KP Energy Ltd secured new green energy projects totaling around 1,000 megawatts from Gujarat Urja Vikas Nigam Limited.",
+  "Larsen & Toubro (L&T) announced plans to acquire a 21% stake in cloud services company E2E Networks Ltd for ₹1,407.02 crore.",
+];

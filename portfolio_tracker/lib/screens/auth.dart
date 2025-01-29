@@ -127,6 +127,7 @@ class _AuthScreenState extends State<AuthScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              // Icon(Icons.stacked_bar_chart),
               if (!isLogin)
                 TextField(
                   controller: userName,

@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:portfolio_tracker/models/chart.dart';
 import 'package:portfolio_tracker/screens/payment.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'dart:math';
 
 class StockScreen extends StatefulWidget {
   const StockScreen({
@@ -26,6 +27,11 @@ class _StockScreenState extends State<StockScreen> {
   TextEditingController quantity = TextEditingController();
   late TooltipBehavior _toolTipBehavior;
 
+  double random() {
+    return indianStocks[widget.title]!['price'] -
+        Random().nextInt(50).toDouble();
+  }
+
   @override
   void initState() {
     _toolTipBehavior = TooltipBehavior(enable: true);
@@ -45,7 +51,9 @@ class _StockScreenState extends State<StockScreen> {
             Text(
               '₹ ' + indianStocks[widget.title]!['price'].toString(),
             ),
-            SizedBox(height: 8,),
+            SizedBox(
+              height: 8,
+            ),
             ElevatedButton(
               onPressed: () {
                 showDialog(
@@ -108,9 +116,9 @@ class _StockScreenState extends State<StockScreen> {
                 );
               },
               style: ButtonStyle(
-                elevation: WidgetStatePropertyAll(4),
-                backgroundColor: WidgetStatePropertyAll(Theme.of(context).colorScheme.inversePrimary)
-              ),
+                  elevation: WidgetStatePropertyAll(4),
+                  backgroundColor: WidgetStatePropertyAll(
+                      Theme.of(context).colorScheme.inversePrimary)),
               child: Text(
                 'Buy',
                 style: TextStyle(
@@ -118,6 +126,7 @@ class _StockScreenState extends State<StockScreen> {
                 ),
               ),
             ),
+            SizedBox(height: 60,),
             SfCartesianChart(
               primaryXAxis: CategoryAxis(),
               tooltipBehavior: _toolTipBehavior,
@@ -125,12 +134,15 @@ class _StockScreenState extends State<StockScreen> {
               series: [
                 LineSeries<Chart, String>(
                   dataSource: <Chart>[
-                    Chart("1-jan-25", 3),
-                    Chart("2-jan-25", 5),
-                    Chart("3-jan-25", 6),
-                    Chart("4-jan-25", 5),
-                    Chart("5-jan-25", 4),
-                    Chart("6-jan-25", 8),
+                    Chart("1-jan-25", random()),
+                    Chart("2-jan-25", random()),
+                    Chart("3-jan-25", random()),
+                    Chart("4-jan-25", random()),
+                    Chart("5-jan-25", random()),
+                    Chart("6-jan-25", random()),
+                    Chart("7-jan-25", random()),
+                    Chart("8-jan-25", random()),
+                    Chart("9-jan-25", random()),
                   ],
                   dataLabelSettings: DataLabelSettings(isVisible: true),
                   xValueMapper: (Chart point, _) => point.date,

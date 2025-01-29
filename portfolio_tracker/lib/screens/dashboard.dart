@@ -161,7 +161,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       );
                     },
                     child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 50, vertical: 30),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 50, vertical: 30),
                       decoration: BoxDecoration(
                         color: Theme.of(context).colorScheme.primaryContainer,
                         borderRadius: BorderRadius.circular(5),
@@ -181,7 +182,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       );
                     },
                     child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 50, vertical: 30),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 50, vertical: 30),
                       decoration: BoxDecoration(
                         color: Theme.of(context).colorScheme.primaryContainer,
                         borderRadius: BorderRadius.circular(5),
@@ -199,8 +201,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       dataMap: dataMap,
                       chartValuesOptions: ChartValuesOptions(decimalPlaces: 2),
                     )
-                  : 
-                   Center(
+                  : Center(
                       // heightFactor: 20,
                       child: Text(
                         "Currently you don't hold any holdings !!!",
@@ -215,11 +216,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
               Text(
                 'Trending News',
-                style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  // color: Theme.of(context).colorScheme.secondary,
+                ),
               ),
-              SizedBox(height: 30,),
+              SizedBox(
+                height: 30,
+              ),
               CarouselSlider(
-                items: [1, 2, 3, 4, 5].map((e) {
+                items: [0, 1, 2, 3, 4].map((e) {
                   return Builder(
                     builder: (context) {
                       return NewsComponent(
@@ -232,6 +239,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   autoPlay: true,
                   viewportFraction: 0.8,
                   enlargeCenterPage: true,
+                  autoPlayInterval: Duration(
+                    seconds: 6,
+                  ),
                 ),
               ),
             ],
