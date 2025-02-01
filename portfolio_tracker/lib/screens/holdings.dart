@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:portfolio_tracker/components/stock_tile.dart';
 import 'package:http/http.dart' as http;
+import 'package:portfolio_tracker/config.dart';
 import 'package:portfolio_tracker/data/listed_companies.dart';
 import 'package:portfolio_tracker/screens/payment.dart';
 
@@ -23,7 +24,7 @@ class _HoldingsScreenState extends State<HoldingsScreen> {
   void getHoldings() async {
     var response = await http.post(
       Uri.parse(
-        'http://192.168.1.7:5000/get_holdings',
+        'http://$localhost:5000/get_holdings',
       ),
       body: jsonEncode({
         "email": widget.email,

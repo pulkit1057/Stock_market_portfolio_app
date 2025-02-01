@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:portfolio_tracker/data/listed_companies.dart';
-import 'package:http/http.dart' as http;
+// import 'package:http/http.dart' as http;
 import 'package:portfolio_tracker/screens/stock.dart';
 
 class StockTile extends StatefulWidget {
@@ -29,8 +29,22 @@ class _StockTileState extends State<StockTile> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        // Navigator.of(context).push(MaterialPageRoute(builder: (context) => StockScreen(title: title, email: email, reload: reload),));
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => StockScreen(
+              title: widget.title['company_name'],
+              email: widget.title['email'],
+              reload: () {
+                widget.onAddStock!(
+                  widget.title['company_name'],
+                  "buy",
+                  quantity.text,
+                );
+              },
+            ),
+          ),
+        );
       },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 5),

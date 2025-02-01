@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:portfolio_tracker/config.dart';
 import 'dart:convert';
 import 'package:portfolio_tracker/screens/dashboard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -34,7 +35,7 @@ class _AuthScreenState extends State<AuthScreen> {
       try {
         final response = await http.post(
           Uri.parse(
-            'http://192.168.1.7:5000/registeration',
+            'http://$localhost:5000/registeration',
           ),
           headers: {
             'Content-Type': 'application/json; charset=UTF-8',
@@ -59,7 +60,7 @@ class _AuthScreenState extends State<AuthScreen> {
 
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.1.7:5000/login'),
+        Uri.parse('http://$localhost:5000/login'),
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
         },

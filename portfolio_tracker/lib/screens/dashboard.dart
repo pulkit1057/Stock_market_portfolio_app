@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:portfolio_tracker/components/news_component.dart';
 import 'package:portfolio_tracker/components/user_searchbar.dart';
+import 'package:portfolio_tracker/config.dart';
 import 'package:portfolio_tracker/data/listed_companies.dart';
 import 'package:portfolio_tracker/screens/auth.dart';
 import 'package:portfolio_tracker/screens/holdings.dart';
@@ -33,7 +34,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   void getHoldings() async {
     var response = await http.post(
       Uri.parse(
-        'http://192.168.1.7:5000/get_holdings',
+        'http://$localhost:5000/get_holdings',
       ),
       body: jsonEncode({
         "email": email,

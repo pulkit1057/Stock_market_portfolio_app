@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:portfolio_tracker/config.dart';
 import 'package:portfolio_tracker/data/listed_companies.dart';
 import 'package:http/http.dart' as http;
 import 'package:portfolio_tracker/models/chart.dart';
@@ -91,7 +92,7 @@ class _StockScreenState extends State<StockScreen> {
                       TextButton(
                         onPressed: () async {
                           var response = await http.post(
-                            Uri.parse('http://192.168.1.7:5000/add_stock'),
+                            Uri.parse('http://$localhost:5000/add_stock'),
                             body: jsonEncode({
                               "email": widget.email,
                               "name": widget.title,

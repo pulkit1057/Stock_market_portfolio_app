@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:portfolio_tracker/config.dart';
 
 class TransactionsScreen extends StatefulWidget {
   const TransactionsScreen({
@@ -19,7 +20,7 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
 
   void getTransactions() async {
     var response = await http.post(
-      Uri.parse('http://192.168.1.7:5000/transactions_history'),
+      Uri.parse('http://$localhost:5000/transactions_history'),
       body: jsonEncode(
         {"email": widget.email},
       ),
