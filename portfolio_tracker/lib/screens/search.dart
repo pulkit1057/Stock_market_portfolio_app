@@ -27,7 +27,12 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: UserSearchbar(email: email, reload: (){}),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: UserSearchbar(
+          email: email,
+        ),
+      ),
     );
   }
 }

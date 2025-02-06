@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:portfolio_tracker/components/news_component.dart';
-import 'package:portfolio_tracker/components/user_searchbar.dart';
 import 'package:portfolio_tracker/config.dart';
 import 'package:portfolio_tracker/data/listed_companies.dart';
 import 'package:portfolio_tracker/screens/auth.dart';
@@ -106,26 +105,32 @@ class _DashboardScreenState extends State<DashboardScreen> {
               height: 12,
             ),
             TextButton(
-                onPressed: () async {
-                  final prefs = await SharedPreferencesWithCache.create(
-                    cacheOptions: SharedPreferencesWithCacheOptions(
-                      allowList: <String>{
-                        'token',
-                        'theme',
-                      },
-                    ),
-                  );
+              onPressed: () async {
+                final prefs = await SharedPreferencesWithCache.create(
+                  cacheOptions: SharedPreferencesWithCacheOptions(
+                    allowList: <String>{
+                      'token',
+                      'theme',
+                    },
+                  ),
+                );
 
-                  bool? isDark = prefs.getBool('theme');
-                  if (isDark == null) {
-                    prefs.setBool('theme', true);
-                  } else {
-                    prefs.setBool('theme', !isDark);
-                  }
-                  Provider.of<ThemeProvider>(context, listen: false)
-                      .toggleTheme();
-                },
-                child: Text('Theme')),
+                bool? isDark = prefs.getBool('theme');
+                if (isDark == null) {
+                  prefs.setBool('theme', true);
+                } else {
+                  prefs.setBool('theme', !isDark);
+                }
+                Provider.of<ThemeProvider>(context, listen: false)
+                    .toggleTheme();
+              },
+              child: Text(
+                'Theme',
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.inversePrimary,
+                ),
+              ),
+            ),
             Spacer(),
             Text('Log out'),
           ],
@@ -137,14 +142,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                  margin: EdgeInsets.symmetric(
-                    horizontal: 5,
-                  ),
-                  child: UserSearchbar(
-                    email: email,
-                    reload: getHoldings,
-                  )),
+              // Container(
+              //   margin: EdgeInsets.symmetric(
+              //     horizontal: 5,
+              //   ),
+              //   child: UserSearchbar(
+              //     email: email,
+              //     reload: getHoldings,
+              //   ),
+              // ),
               SizedBox(
                 height: 20,
               ),

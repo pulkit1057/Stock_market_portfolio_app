@@ -7,12 +7,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:portfolio_tracker/components/stock_tile.dart';
+import 'package:portfolio_tracker/screens/portfolio.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const StockTile(title: {},onAddStock: ,));
+    await tester.pumpWidget(const PortfolioScreen());
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

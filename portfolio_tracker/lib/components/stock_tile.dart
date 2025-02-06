@@ -35,13 +35,6 @@ class _StockTileState extends State<StockTile> {
             builder: (context) => StockScreen(
               title: widget.title['company_name'],
               email: widget.title['email'],
-              reload: () {
-                widget.onAddStock!(
-                  widget.title['company_name'],
-                  "buy",
-                  quantity.text,
-                );
-              },
             ),
           ),
         );

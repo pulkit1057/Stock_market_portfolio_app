@@ -14,11 +14,9 @@ class StockScreen extends StatefulWidget {
     super.key,
     required this.title,
     required this.email,
-    required this.reload,
   });
   final String title;
   final String email;
-  final void Function()? reload;
 
   @override
   State<StockScreen> createState() => _StockScreenState();
@@ -132,7 +130,6 @@ class _StockScreenState extends State<StockScreen> {
                                 Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => PaymentScreen(),
                                 ));
-                                widget.reload!();
                               },
                               child: Text('Submit'),
                             ),

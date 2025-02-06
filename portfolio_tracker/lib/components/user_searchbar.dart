@@ -6,10 +6,8 @@ class UserSearchbar extends StatefulWidget {
   const UserSearchbar({
     super.key,
     required this.email,
-    required this.reload,
   });
   final String email;
-  final void Function()? reload;
 
   @override
   State<UserSearchbar> createState() => _UserSearchbarState();
@@ -57,7 +55,17 @@ class _UserSearchbarState extends State<UserSearchbar> {
             (int index) {
               final String item = companyNames[index];
               return ListTile(
+                leading: Icon(
+                  Icons.arrow_outward,
+                ),
                 title: Text(item),
+                trailing: Text(
+                  "₹ ${indianStocks[item]!['price'].toString()}",
+                  style: TextStyle(
+                    color: Colors.green,
+                    fontSize: 16,
+                  ),
+                ),
                 onTap: () {
                   Navigator.of(context)
                       .push(
@@ -65,7 +73,6 @@ class _UserSearchbarState extends State<UserSearchbar> {
                       builder: (context) => StockScreen(
                         title: list[index],
                         email: widget.email,
-                        reload: widget.reload,
                       ),
                     ),
                   )
@@ -85,7 +92,17 @@ class _UserSearchbarState extends State<UserSearchbar> {
             (int index) {
               final String item = list[index];
               return ListTile(
+                leading: Icon(
+                  Icons.arrow_outward,
+                ),
                 title: Text(item),
+                trailing: Text(
+                  "₹ ${indianStocks[item]!['price'].toString()}",
+                  style: TextStyle(
+                    color: Colors.green,
+                    fontSize: 16,
+                  ),
+                ),
                 onTap: () {
                   Navigator.of(context)
                       .push(
@@ -93,7 +110,6 @@ class _UserSearchbarState extends State<UserSearchbar> {
                       builder: (context) => StockScreen(
                         title: list[index],
                         email: widget.email,
-                        reload: widget.reload,
                       ),
                     ),
                   )
