@@ -42,7 +42,7 @@ class _HoldingsScreenState extends State<HoldingsScreen> {
 
   void onAddStockasync(name, action, quantity) async {
     var response = await http.post(
-      Uri.parse('http://192.168.1.7:5000/add_stock'),
+      Uri.parse('http://$localhost:5000/add_stock'),
       body: jsonEncode({
         "email": widget.email,
         "name": name,

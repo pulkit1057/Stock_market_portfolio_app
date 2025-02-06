@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:portfolio_tracker/screens/auth.dart';
-import 'package:portfolio_tracker/screens/dashboard.dart';
+import 'package:portfolio_tracker/screens/tabs.dart';
 import 'package:portfolio_tracker/theme/theme_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
           ? AuthScreen(
               prefs: prefs,
             )
-          : DashboardScreen(
+          : TabsScreen(
               token: token!,
             ),
     );

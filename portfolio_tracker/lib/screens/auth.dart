@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:portfolio_tracker/config.dart';
 import 'dart:convert';
-import 'package:portfolio_tracker/screens/dashboard.dart';
+import 'package:portfolio_tracker/screens/tabs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -52,7 +52,6 @@ class _AuthScreenState extends State<AuthScreen> {
         if (!responseBody['status']) {
           return;
         }
-        
       } catch (e) {
         throw e;
       }
@@ -79,7 +78,7 @@ class _AuthScreenState extends State<AuthScreen> {
         widget.prefs.setString('token', myToken);
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (context) => DashboardScreen(
+            builder: (context) => TabsScreen(
               token: myToken,
             ),
           ),
@@ -118,79 +117,89 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.grey.shade200,
-      body: Padding(
-        padding: const EdgeInsets.all(18.0),
-        child: Container(
-          decoration: BoxDecoration(
-              // color: Colors.white
-              ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Icon(Icons.stacked_bar_chart),
-              if (!isLogin)
-                TextField(
-                  controller: userName,
-                  decoration: InputDecoration(
-                    hintText: "Username",
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(),
-                    ),
-                  ),
-                ),
-              SizedBox(
-                height: 5,
-              ),
+      body: Container(
+        padding: EdgeInsets.all(18),
+        margin: EdgeInsets.only(
+          top: 25,
+          left: 10,
+          right: 10,
+          bottom: 10,
+        ),
+        decoration: BoxDecoration(
+            // color: Theme.of(context).colorScheme.primary,
+            borderRadius: BorderRadius.circular(
+              18,
+            )),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Icon(Icons.stacked_bar_chart),
+            if (!isLogin)
               TextField(
-                controller: userEmail,
+                controller: userName,
                 decoration: InputDecoration(
-                  hintText: "Email",
+                  hintText: "Username",
                   border: OutlineInputBorder(
                     borderSide: BorderSide(),
                   ),
                 ),
               ),
-              SizedBox(
-                height: 5,
-              ),
-              TextField(
-                controller: userPassword,
-                decoration: InputDecoration(
-                  hintText: "Password",
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(),
-                  ),
-                ),
-                obscureText: true,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              TextButton(
-                style: ButtonStyle(
-                    backgroundColor: WidgetStatePropertyAll(Colors.black)),
-                onPressed: onSubmit,
-                child: Text(
-                  isLogin ? "Sign in" : "Sign up",
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
+            SizedBox(
+              height: 5,
+            ),
+            TextField(
+              controller: userEmail,
+              decoration: InputDecoration(
+                hintText: "Email",
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(),
                 ),
               ),
-              SizedBox(
-                height: 20,
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            TextField(
+              controller: userPassword,
+              decoration: InputDecoration(
+                hintText: "Password",
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(),
+                ),
               ),
-              TextButton(
-                onPressed: () {
-                  setState(() {
-                    isLogin = !isLogin;
-                  });
-                },
-                child: Text(isLogin ? "Register" : "Already have an account"),
-              )
-            ],
-          ),
+              obscureText: true,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            TextButton(
+              style: ButtonStyle(
+                  backgroundColor: WidgetStatePropertyAll(Colors.black)),
+              onPressed: onSubmit,
+              child: Text(
+                isLogin ? "Sign in" : "Sign up",
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  isLogin = !isLogin;
+                });
+              },
+              child: Text(
+                isLogin ? "Register" : "Already have an account",
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.inversePrimary,
+                ),
+              ),
+            )
+          ],
         ),
       ),
     );
