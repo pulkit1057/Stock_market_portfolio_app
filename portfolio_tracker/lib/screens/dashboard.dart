@@ -3,6 +3,7 @@ import 'package:pie_chart/pie_chart.dart';
 import 'package:portfolio_tracker/components/news_component.dart';
 import 'package:portfolio_tracker/config.dart';
 import 'package:portfolio_tracker/data/listed_companies.dart';
+import 'package:portfolio_tracker/providers/user_holdings_provider.dart';
 import 'package:portfolio_tracker/screens/auth.dart';
 import 'package:portfolio_tracker/screens/holdings.dart';
 import 'package:http/http.dart' as http;
@@ -27,25 +28,12 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   late String email;
+  late bool firstTime;
   List<dynamic> userHoldings = [];
   Map<String, double> dataMap = {"stocks": 5};
 
   void getHoldings() async {
-    var response = await http.post(
-      Uri.parse(
-        'http://$localhost:5000/get_holdings',
-      ),
-      body: jsonEncode({
-        "email": email,
-      }),
-      headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-    );
-
-    var decodedResponse = jsonDecode(response.body);
     setState(() {
-      userHoldings = decodedResponse['data'];
       dataMap = {};
       if (userHoldings.isEmpty) {
         dataMap = {'stocks': 32};
@@ -64,11 +52,29 @@ class _DashboardScreenState extends State<DashboardScreen> {
     super.initState();
     Map<String, dynamic> jwtDecodedToken = JwtDecoder.decode(widget.token);
     email = jwtDecodedToken['email'];
-    getHoldings();
+    firstTime = context.read<UserHoldingsProvider>().isFirsttime;
+
+    // getHoldings();
+
+    // print(Provider.of<UserHoldingsProvider>(
+    //   context,
+    //   listen: false,
+    // ).userHoldings);
   }
 
   @override
   Widget build(BuildContext context) {
+    // if (firstTime) {
+    //   setState(() {
+    //     context.read<UserHoldingsProvider>().setup();
+    //     userHoldings = context.read<UserHoldingsProvider>().userHoldings;
+    //     getHoldings();
+    //   });
+    // }
+    context.read<UserHoldingsProvider>().setup();
+    userHoldings = context.read<UserHoldingsProvider>().userHoldings;
+    getHoldings();
+    print(userHoldings);
     return Scaffold(
       appBar: AppBar(
         title: Text('Portfolios'),

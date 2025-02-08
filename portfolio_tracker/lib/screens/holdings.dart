@@ -4,7 +4,9 @@ import 'package:portfolio_tracker/components/stock_tile.dart';
 import 'package:http/http.dart' as http;
 import 'package:portfolio_tracker/config.dart';
 import 'package:portfolio_tracker/data/listed_companies.dart';
+import 'package:portfolio_tracker/providers/user_holdings_provider.dart';
 import 'package:portfolio_tracker/screens/payment.dart';
+import 'package:provider/provider.dart';
 
 class HoldingsScreen extends StatefulWidget {
   const HoldingsScreen({
@@ -54,18 +56,23 @@ class _HoldingsScreenState extends State<HoldingsScreen> {
         'Content-Type': 'application/json; charset=UTF-8',
       },
     );
-    setState(() {
-      Navigator.of(context).pop();
-      getHoldings();
-      if (action == 'buy') {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => PaymentScreen(),
-          ),
-        );
-      }
-      widget.reload!();
-    });
+    setState(
+      () {
+        Navigator.of(context).pop();
+        getHoldings();
+        if (action == 'buy') {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => PaymentScreen(),
+            ),
+          );
+        }
+        Provider.of<UserHoldingsProvider>(
+          context,
+          listen: false,
+        ).setup();
+      },
+    );
   }
 
   @override

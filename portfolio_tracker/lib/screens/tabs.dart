@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio_tracker/providers/user_holdings_provider.dart';
 import 'package:portfolio_tracker/screens/dashboard.dart';
 import 'package:portfolio_tracker/screens/portfolio.dart';
 import 'package:portfolio_tracker/screens/search.dart';
+import 'package:provider/provider.dart';
 
 class TabsScreen extends StatefulWidget {
   const TabsScreen({
@@ -33,9 +35,7 @@ class _TabsScreenState extends State<TabsScreen> {
       activeScreen = SearchScreen(
         token: widget.token,
       );
-    }
-    else if(_selectedIndex == 2)
-    {
+    } else if (_selectedIndex == 2) {
       activeScreen = PortfolioScreen();
     }
     return Scaffold(

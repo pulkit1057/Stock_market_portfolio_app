@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:portfolio_tracker/config.dart';
+import 'package:portfolio_tracker/providers/user_holdings_provider.dart';
 import 'dart:convert';
 import 'package:portfolio_tracker/screens/tabs.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthScreen extends StatefulWidget {

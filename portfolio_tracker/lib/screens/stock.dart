@@ -5,7 +5,9 @@ import 'package:portfolio_tracker/config.dart';
 import 'package:portfolio_tracker/data/listed_companies.dart';
 import 'package:http/http.dart' as http;
 import 'package:portfolio_tracker/models/chart.dart';
+import 'package:portfolio_tracker/providers/user_holdings_provider.dart';
 import 'package:portfolio_tracker/screens/payment.dart';
+import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'dart:math';
 
@@ -126,10 +128,13 @@ class _StockScreenState extends State<StockScreen> {
                                         'application/json; charset=UTF-8',
                                   },
                                 );
+                                context.read<UserHoldingsProvider>().setup();
                                 Navigator.of(context).pop();
-                                Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => PaymentScreen(),
-                                ));
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => PaymentScreen(),
+                                  ),
+                                );
                               },
                               child: Text('Submit'),
                             ),

@@ -4,8 +4,6 @@ import 'package:portfolio_tracker/theme/light_mode.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ThemeProvider extends ChangeNotifier {
-  // bool? dark = prefs.getBool();
-
   ThemeData _themeData = lightMode;
   ThemeProvider() {
     setup();

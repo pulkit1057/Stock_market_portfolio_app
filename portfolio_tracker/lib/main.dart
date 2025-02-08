@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:portfolio_tracker/providers/user_holdings_provider.dart';
 import 'package:portfolio_tracker/screens/auth.dart';
 import 'package:portfolio_tracker/screens/tabs.dart';
 import 'package:portfolio_tracker/theme/theme_provider.dart';
@@ -21,6 +22,9 @@ void main() async {
       providers: [
         ChangeNotifierProvider(
           create: (context) => ThemeProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => UserHoldingsProvider(),
         ),
       ],
       child: MyApp(
